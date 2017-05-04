@@ -5,8 +5,8 @@ default:
       paths: [ %paths.base%/tests/behat/features ]
       contexts:
         - FeatureContext
+
   formatters:
-    progress_fail:
-    extensions:
-      IntegratedExperts\BehatFormatProgressFail\FormatExtension:
-        name: progress_fail
+    progress_fail: ~
+  extensions:
+    IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
