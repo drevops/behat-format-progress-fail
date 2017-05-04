@@ -6,7 +6,5 @@ default:
       contexts:
         - FeatureContext
 
-  formatters:
-    progress_fail: ~
   extensions:
     IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~

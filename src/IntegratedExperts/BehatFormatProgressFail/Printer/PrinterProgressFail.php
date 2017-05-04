@@ -81,7 +81,7 @@ class PrinterProgressFail implements StepPrinter
                 $stepInfo = sprintf("      %s %s", $step->getKeyword(), $step->getText());
                 $errorText = "";
                 foreach ($step->getArguments() as $argument) {
-                  $errorText = (empty($argument)) ? "\n" : $argument;
+                    $errorText = (empty($argument)) ? "\n" : $argument;
                 }
                 $printer->write(
                     sprintf("\n---{+$style} FAIL {-$style}---\n---{+$style} %s\n%s\n%s\n%s{-$style}\n", $testLine, $scenarioTitle, $stepInfo, $errorText)

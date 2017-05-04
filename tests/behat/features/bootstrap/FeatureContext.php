@@ -229,38 +229,6 @@ class FeatureContext implements Context
         PHPUnit_Framework_Assert::assertContains($this->getExpectedOutput($text), $this->getOutput());
     }
 
-    private function getExpectedOutput(PyStringNode $expectedText)
-    {
-        $text = strtr($expectedText, array('\'\'\'' => '"""', '%%TMP_DIR%%' => sys_get_temp_dir().DIRECTORY_SEPARATOR));
-
-        // windows path fix
-        if ('/' !== DIRECTORY_SEPARATOR) {
-            $text = preg_replace_callback(
-                '/[ "]features\/[^\n "]+/',
-                function ($matches) {
-                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-                },
-                $text
-            );
-            $text = preg_replace_callback(
-                '/\<span class\="path"\>features\/[^\<]+/',
-                function ($matches) {
-                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-                },
-                $text
-            );
-            $text = preg_replace_callback(
-                '/\+[fd] [^ ]+/',
-                function ($matches) {
-                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-                },
-                $text
-            );
-        }
-
-        return $text;
-    }
-
   /**
    * Checks whether previously ran command failed|passed.
    *
@@ -299,6 +267,38 @@ class FeatureContext implements Context
         $dom->load($this->workingDir.'/'.$xmlFile);
 
         $dom->schemaValidate(__DIR__.'/schema/'.$schemaPath);
+    }
+
+    private function getExpectedOutput(PyStringNode $expectedText)
+    {
+        $text = strtr($expectedText, array('\'\'\'' => '"""', '%%TMP_DIR%%' => sys_get_temp_dir().DIRECTORY_SEPARATOR));
+
+        // windows path fix
+        if ('/' !== DIRECTORY_SEPARATOR) {
+            $text = preg_replace_callback(
+                '/[ "]features\/[^\n "]+/',
+                function ($matches) {
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                },
+                $text
+            );
+            $text = preg_replace_callback(
+                '/\<span class\="path"\>features\/[^\<]+/',
+                function ($matches) {
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                },
+                $text
+            );
+            $text = preg_replace_callback(
+                '/\+[fd] [^ ]+/',
+                function ($matches) {
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                },
+                $text
+            );
+        }
+
+        return $text;
     }
 
     private function getExitCode()

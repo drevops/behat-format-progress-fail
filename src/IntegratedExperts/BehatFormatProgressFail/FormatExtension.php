@@ -93,18 +93,18 @@ class FormatExtension implements ExtensionInterface
     public function load(ContainerBuilder $container, array $config)
     {
         $definition = new Definition('Behat\Behat\Output\Node\EventListener\AST\StepListener', [
-            new Reference('output.printer.'.self::MOD_ID),
+            new Reference('output.printer.'.$config['name']),
         ]);
         $container->setDefinition(self::ROOT_LISTENER_ID, $definition);
 
         $definition = new Definition('IntegratedExperts\BehatFormatProgressFail\Printer\PrinterProgressFail', [
             new Reference(self::RESULT_TO_STRING_CONVERTER_ID),
-            self::BASE_PATH,
+            $config['base_path'],
         ]);
-        $container->setDefinition('output.printer.'.self::MOD_ID, $definition);
+        $container->setDefinition('output.printer.'.$config['name'], $definition);
 
         $definition = new Definition('Behat\Testwork\Output\NodeEventListeningFormatter', [
-            self::MOD_ID,
+            $config['name'],
             'Prints one character per step and fail view pretty.',
             ['timer' => true],
             $this->createOutputPrinterDefinition(),
@@ -130,7 +130,7 @@ class FormatExtension implements ExtensionInterface
             ]),
         ]);
         $definition->addTag(OutputExtension::FORMATTER_TAG, ['priority' => 100]);
-        $container->setDefinition(OutputExtension::FORMATTER_TAG.'.'.self::MOD_ID, $definition);
+        $container->setDefinition(OutputExtension::FORMATTER_TAG.'.'.$config['name'], $definition);
     }
 
   /**

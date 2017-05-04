@@ -1,0 +1,21 @@
+machine:
+  environment:
+    # Build configuration.
+    BUILD_DIR: $HOME/$CIRCLE_PROJECT_REPONAME
+    # Add composer bin to path.
+    PATH: "$HOME/.config/composer/vendor/bin:$PATH"
+
+dependencies:
+  cache_directories:
+    - ~/.composer/cache
+  pre:
+    - rm /opt/circleci/php/$(phpenv global)/etc/conf.d/xdebug.ini
+  override:
+    - cd $HOME/$CIRCLE_PROJECT_REPONAME && composer install --no-progress --no-interaction
+
+test:
+  override:
+    # Lint code.
+    - composer cs
+    # Run tests.
+    - composer test
