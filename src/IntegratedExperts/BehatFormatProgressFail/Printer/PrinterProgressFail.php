@@ -14,7 +14,6 @@ use Behat\Gherkin\Node\ScenarioLikeInterface as Scenario;
 use Behat\Gherkin\Node\StepNode;
 use Behat\Testwork\Output\Formatter;
 use Behat\Testwork\Tester\Result\TestResult;
-use Behat\Behat\Output\Statistics\Statistics;
 
 /**
  * Class FormatProgressFail.
@@ -74,18 +73,7 @@ class PrinterProgressFail implements StepPrinter
                 $printer->write("{+$style}U{-$style}");
                 break;
             case TestResult::FAILED:
-                $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
-                $fileLine = $scenario->getLine();
-                $testLine = sprintf("(%s):%s", $fileName, $fileLine);
-                $scenarioTitle = sprintf("%s:\n    %s", $scenario->getKeyword(), $scenario->getTitle());
-                $stepInfo = sprintf("      %s %s", $step->getKeyword(), $step->getText());
-                $errorText = "";
-                foreach ($step->getArguments() as $argument) {
-                    $errorText = (empty($argument)) ? "\n" : $argument;
-                }
-                $printer->write(
-                    sprintf("\n---{+$style} FAIL {-$style}---\n---{+$style} %s\n%s\n%s\n%s{-$style}\n", $testLine, $scenarioTitle, $stepInfo, $errorText)
-                );
+                $printer->write($this->printFailure($result, $scenario, $step));
                 break;
         }
 
@@ -95,13 +83,37 @@ class PrinterProgressFail implements StepPrinter
     }
 
   /**
+   * Creates information about fail step.
+   *
+   * @param StepResult $result
+   * @param Scenario $scenario
+   * @param StepNode $step
+   * @return string
+   */
+    protected function printFailure($result, $scenario, $step)
+    {
+        $style = $this->resultConverter->convertResultToString($result);
+        $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
+        $fileLine = $scenario->getLine();
+        $testLine = sprintf("(%s):%s", $fileName, $fileLine);
+        $scenarioTitle = sprintf("%s:\n    %s", $scenario->getKeyword(), $scenario->getTitle());
+        $stepInfo = sprintf("      %s %s", $step->getKeyword(), $step->getText());
+        $errorText = "";
+        foreach ($step->getArguments() as $argument) {
+            $errorText = (empty($argument)) ? "\n" : $argument;
+        }
+
+        return sprintf("\n---{+$style} FAIL {-$style}---\n---{+$style} %s\n%s\n%s\n%s{-$style}\n", $testLine, $scenarioTitle, $stepInfo, $errorText);
+    }
+
+  /**
    * Transforms path to relative.
    *
    * @param string $path
    *
    * @return string
    */
-    private function relativizePaths($path)
+    protected function relativizePaths($path)
     {
         return (!$this->basePath) ? $path : str_replace($this->basePath.DIRECTORY_SEPARATOR, '', $path);
     }

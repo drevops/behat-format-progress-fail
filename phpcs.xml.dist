@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="behat-relativity">
-  <description>The coding standard for behat-relativity.</description>
+<ruleset name="behat-format-progress-fail">
+  <description>The coding standard for behat-format-progress-fail.</description>
 
   <rule ref="Symfony2" />
 

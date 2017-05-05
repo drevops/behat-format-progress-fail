@@ -1,5 +1,5 @@
 {
-  "name": "integrantedexperts/behat-format-progress-fail",
+  "name": "integratedexperts/behat-format-progress-fail",
   "description": "Behat context for formatting steps test.",
   "type": "library",
   "license": "GPL-2.0+",

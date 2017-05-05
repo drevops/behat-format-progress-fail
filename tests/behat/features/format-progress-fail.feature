@@ -1,7 +1,5 @@
-Feature: Multiple formats
-  In order to use multiple formats
-  As a tester
-  I need to be able to specify multiple output formats to behat
+Feature: behat-format-progress-fail
+  Behat output formatter to show progress as TAP and fails inline.
 
   Background:
     Given a file named "features/bootstrap/FeatureContext.php" with:
