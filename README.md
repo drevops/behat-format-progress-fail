@@ -31,7 +31,6 @@ default:
     IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
 ```
 ## Usage
->Mac OS/Linux terminal
 ```bash
 vendor/bin/behat --format=progress_fail
 ```
