@@ -2,6 +2,9 @@
 Behat output formatter to show progress as TAP and fails inline.
 
 [![CircleCI](https://circleci.com/gh/integratedexperts/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/integratedexperts/behat-format-progress-fail)
+[![Latest Stable Version](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/v/stable)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
+[![Total Downloads](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/downloads)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
+[![License](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/license)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
 
 ## Installing
 ```bash
