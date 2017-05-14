@@ -123,18 +123,14 @@ Feature: behat-format-progress-fail
       """
       ..
       --- FAIL ---
-      --- (features/apples.feature):6
-      Background:
-
-            Then I should have 3 apples
-
+          Then I should have 3 apples # (features/apples.feature):11
+            Failed asserting that 2 matches expected 3.
+      ------------
       ......U.......
       --- FAIL ---
-      --- (features/apples.feature):6
-      Background:
-
-            Then I should have 8 apples
-
+          Then I should have 8 apples # (features/apples.feature):25
+            Failed asserting that 7 matches expected 8.
+      ------------
       .....UU
 
       --- Failed steps:
