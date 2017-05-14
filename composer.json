@@ -30,7 +30,7 @@
   "scripts": {
     "cs": "./vendor/bin/phpcs --runtime-set installed_paths $(pwd)/vendor/escapestudios/symfony2-coding-standard --colors -s -p",
     "cbf": "./vendor/bin/phpcbf --runtime-set installed_paths $(pwd)/vendor/escapestudios/symfony2-coding-standard --colors",
-    "test": "vendor/bin/behat --colors --format=progress_fail --strict",
+    "test": "vendor/bin/behat --colors --format=progress_fail --strict --colors",
     "cleanup": "rm -Rf $(pwd)/vendor;"
   }
 }
