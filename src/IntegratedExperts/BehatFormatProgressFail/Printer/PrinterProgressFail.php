@@ -89,26 +89,26 @@ class PrinterProgressFail implements StepPrinter
      */
     protected function printFailure($result, $scenario, $step)
     {
+        $output = '';
         $style = $this->resultConverter->convertResultToString($result);
-        $fileName = $this->relativizePaths(
-            $result->getCallResult()->getCall()->getFeature()->getFile()
-        );
-        $fileLine = $scenario->getLine();
-        $testLine = sprintf("(%s):%s", $fileName, $fileLine);
-        $scenarioTitle = sprintf(
-            "%s:\n    %s", $scenario->getKeyword(), $scenario->getTitle()
-        );
-        $stepInfo = sprintf(
-            "      %s %s", $step->getKeyword(), $step->getText()
-        );
-        $errorText = "";
-        foreach ($step->getArguments() as $argument) {
-            $errorText = (empty($argument)) ? "\n" : $argument;
-        }
+        $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
+        $fileLine = $step->getLine();
 
-        return sprintf(
-            "\n---{+$style} FAIL {-$style}---\n---{+$style} %s\n%s\n%s\n%s{-$style}\n", $testLine, $scenarioTitle, $stepInfo, $errorText
-        );
+        $output .= PHP_EOL;
+        $output .= "{+$style}--- FAIL ---{-$style}";
+        $output .= PHP_EOL;
+        $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine, implode(PHP_EOL, array_filter($step->getArguments())));
+        $output .= PHP_EOL;
+        if (count(array_filter($step->getArguments())) > 0) {
+            $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($step->getArguments())));
+            $output .= PHP_EOL;
+        }
+        $output .= sprintf("      {+$style}%s{-$style}", $result->getException()->getMessage());
+        $output .= PHP_EOL;
+        $output .= "{+$style}------------{-$style}";
+        $output .= PHP_EOL;
+
+        return sprintf("%s", $output);
     }
 
     /**
