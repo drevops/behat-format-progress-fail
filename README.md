@@ -21,6 +21,8 @@ Behat output formatter to show progress as TAP and fails inline.
 .....UU
 ```
 
+![Output in CI](https://cloud.githubusercontent.com/assets/378794/26039517/1765b812-395f-11e7-9932-dd1aa43a97d4.png)
+
 ## Installing
 ```bash
 composer require --dev integratedexperts/behat-format-progress-fail
