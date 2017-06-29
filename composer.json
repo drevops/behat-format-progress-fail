@@ -14,7 +14,7 @@
     }
   ],
   "require": {
-    "behat/behat": "~3.1.0-rc2"
+    "behat/behat": ">=3.3.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",

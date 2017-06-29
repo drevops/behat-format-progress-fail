@@ -135,11 +135,13 @@ Feature: behat-format-progress-fail
 
       --- Failed steps:
 
-          Then I should have 3 apples # features/apples.feature:11
-            Failed asserting that 2 matches expected 3.
+      001 Scenario: I'm little hungry   # features/apples.feature:9
+            Then I should have 3 apples # features/apples.feature:11
+              Failed asserting that 2 matches expected 3.
 
-          Then I should have 8 apples # features/apples.feature:25
-            Failed asserting that 7 matches expected 8.
+      002 Example: | 0   | 4     | 8      | # features/apples.feature:30
+            Then I should have 8 apples     # features/apples.feature:25
+              Failed asserting that 7 matches expected 8.
 
       7 scenarios (3 passed, 2 failed, 2 undefined)
       25 steps (20 passed, 2 failed, 3 undefined)
