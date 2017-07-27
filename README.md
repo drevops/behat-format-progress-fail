@@ -1,4 +1,4 @@
-# behat-format-progress-fail
+# Behat Progress Fail Output Extension
 Behat output formatter to show progress as TAP and fails inline.
 
 [![CircleCI](https://circleci.com/gh/integratedexperts/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/integratedexperts/behat-format-progress-fail)
