@@ -89,26 +89,29 @@ class PrinterProgressFail implements StepPrinter
      */
     protected function printFailure($result, $scenario, $step)
     {
-        $output = '';
-        $style = $this->resultConverter->convertResultToString($result);
-        $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
-        $fileLine = $step->getLine();
+        if ($result instanceof ExecutedStepResult) {
+            $output = '';
+            $style = $this->resultConverter->convertResultToString($result);
+            $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
+            $fileLine = $step->getLine();
 
-        $output .= PHP_EOL;
-        $output .= "{+$style}--- FAIL ---{-$style}";
-        $output .= PHP_EOL;
-        $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine, implode(PHP_EOL, array_filter($step->getArguments())));
-        $output .= PHP_EOL;
-        if (count(array_filter($step->getArguments())) > 0) {
-            $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($step->getArguments())));
             $output .= PHP_EOL;
-        }
-        $output .= sprintf("      {+$style}%s{-$style}", $result->getException()->getMessage());
-        $output .= PHP_EOL;
-        $output .= "{+$style}------------{-$style}";
-        $output .= PHP_EOL;
+            $output .= "{+$style}--- FAIL ---{-$style}";
+            $output .= PHP_EOL;
+            $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine, implode(PHP_EOL, array_filter($step->getArguments())));
+            $output .= PHP_EOL;
+            if (count(array_filter($step->getArguments())) > 0) {
+                $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($step->getArguments())));
+                $output .= PHP_EOL;
+            }
+            $output .= sprintf("      {+$style}%s{-$style}", $result->getException()->getMessage());
+            $output .= PHP_EOL;
+            $output .= "{+$style}------------{-$style}";
+            $output .= PHP_EOL;
 
-        return sprintf("%s", $output);
+            return sprintf("%s", $output);
+        }
+
     }
 
     /**
