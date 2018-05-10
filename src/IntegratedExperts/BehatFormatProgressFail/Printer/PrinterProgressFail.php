@@ -79,7 +79,7 @@ class PrinterProgressFail implements StepPrinter
     }
 
     /**
-     * Creates information about fail step.
+     * Creates information about failed step.
      *
      * @param StepResult $result
      * @param Scenario   $scenario
