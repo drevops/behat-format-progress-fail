@@ -111,7 +111,6 @@ class PrinterProgressFail implements StepPrinter
 
             return sprintf("%s", $output);
         }
-
     }
 
     /**
