@@ -2,7 +2,7 @@ Feature: behat-format-progress-fail
   Behat output formatter to show progress as TAP and fails inline.
 
   Background:
-    Given a file named "features/bootstrap/FeatureContext.php" with:
+    Given a file named "features/bootstrap/FeatureContextTest.php" with:
       """
       <?php
 
@@ -10,8 +10,9 @@ Feature: behat-format-progress-fail
           Behat\Behat\Tester\Exception\PendingException;
       use Behat\Gherkin\Node\PyStringNode,
           Behat\Gherkin\Node\TableNode;
+      use PHPUnit\Framework\Assert;
 
-      class FeatureContext implements CustomSnippetAcceptingContext
+      class FeatureContextTest implements CustomSnippetAcceptingContext
       {
           private $apples = 0;
           private $parameters;
@@ -47,28 +48,32 @@ Feature: behat-format-progress-fail
            * @Then /^I should have (\d+) apples$/
            */
           public function iShouldHaveApples($count) {
-              PHPUnit_Framework_Assert::assertEquals(intval($count), $this->apples);
+              Assert::assertEquals(intval($count), $this->apples);
           }
 
           /**
            * @Then /^context parameter "([^"]*)" should be equal to "([^"]*)"$/
            */
           public function contextParameterShouldBeEqualTo($key, $val) {
-              PHPUnit_Framework_Assert::assertEquals($val, $this->parameters[$key]);
+              Assert::assertEquals($val, $this->parameters[$key]);
           }
 
           /**
            * @Given /^context parameter "([^"]*)" should be array with (\d+) elements$/
            */
           public function contextParameterShouldBeArrayWithElements($key, $count) {
-              PHPUnit_Framework_Assert::assertInternalType('array', $this->parameters[$key]);
-              PHPUnit_Framework_Assert::assertEquals(2, count($this->parameters[$key]));
+              Assert::assertInternalType('array', $this->parameters[$key]);
+              Assert::assertEquals(2, count($this->parameters[$key]));
           }
       }
       """
     And a file named "behat.yml" with:
       """
       default:
+        suites:
+          default:
+            contexts:
+              - FeatureContextTest
         formatters:
           progress_fail: ~
         extensions:
@@ -117,8 +122,10 @@ Feature: behat-format-progress-fail
             | col1 | col2 |
             | val1 | val2 |
       """
+
+
   Scenario: 2 formats, write first to file
-    When I run "behat --no-colors -f progress_fail"
+    When I run "behat --no-colors --strict -f progress_fail"
     Then it should fail with:
       """
       ..
@@ -146,7 +153,7 @@ Feature: behat-format-progress-fail
       7 scenarios (3 passed, 2 failed, 2 undefined)
       25 steps (20 passed, 2 failed, 3 undefined)
 
-      --- FeatureContext has missing steps. Define them with these snippets:
+      --- FeatureContextTest has missing steps. Define them with these snippets:
 
           /**
            * @Then /^do something undefined$/

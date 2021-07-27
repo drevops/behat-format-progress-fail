@@ -2,7 +2,7 @@
 <ruleset name="behat-format-progress-fail">
   <description>The coding standard for behat-format-progress-fail.</description>
 
-  <rule ref="Symfony2" />
+  <rule ref="Symfony" />
 
   <file>src/</file>
   <file>tests/</file>
@@ -17,4 +17,14 @@
   <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
     <exclude-pattern>./tests/*</exclude-pattern>
   </rule>
+  <rule ref="Symfony.NamingConventions.ValidClassName.InvalidInterfaceName">
+      <exclude-pattern>.*context.*</exclude-pattern>
+  </rule>
+  <rule ref="Symfony.Commenting.FunctionComment.MissingParamTag">
+      <exclude-pattern>*</exclude-pattern>
+  </rule>
+  <rule ref="Symfony.Commenting.Annotations.Invalid">
+      <exclude-pattern>.*context.*</exclude-pattern>
+  </rule>
+
 </ruleset>

@@ -20,13 +20,14 @@ use Behat\Testwork\Tester\Result\TestResult;
  */
 class PrinterProgressFail implements StepPrinter
 {
+
     /**
      * @var ResultToStringConverter $resultConverter
      */
     private $resultConverter;
 
     /**
-     * @var integer $stepsPrinted
+     * @var int $stepsPrinted
      */
     private $stepsPrinted = 0;
 
@@ -52,6 +53,7 @@ class PrinterProgressFail implements StepPrinter
      */
     public function printStep(Formatter $formatter, Scenario $scenario, StepNode $step, StepResult $result)
     {
+        $lineWidth = 70;
         $printer = $formatter->getOutputPrinter();
         $style = $this->resultConverter->convertResultToString($result);
 
@@ -73,7 +75,7 @@ class PrinterProgressFail implements StepPrinter
                 break;
         }
 
-        if (++$this->stepsPrinted % 70 == 0) {
+        if (0 === ++$this->stepsPrinted % $lineWidth) {
             $printer->writeln(' '.$this->stepsPrinted);
         }
     }
@@ -90,6 +92,7 @@ class PrinterProgressFail implements StepPrinter
     protected function printFailure($result, $scenario, $step)
     {
         $output = '';
+
         $style = $this->resultConverter->convertResultToString($result);
         $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
         $fileLine = $step->getLine();
@@ -99,10 +102,12 @@ class PrinterProgressFail implements StepPrinter
         $output .= PHP_EOL;
         $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine, implode(PHP_EOL, array_filter($step->getArguments())));
         $output .= PHP_EOL;
+
         if (count(array_filter($step->getArguments())) > 0) {
             $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($step->getArguments())));
             $output .= PHP_EOL;
         }
+
         $output .= sprintf("      {+$style}%s{-$style}", $result->getException()->getMessage());
         $output .= PHP_EOL;
         $output .= "{+$style}------------{-$style}";
@@ -120,7 +125,7 @@ class PrinterProgressFail implements StepPrinter
      */
     protected function relativizePaths($path)
     {
-        return (!$this->basePath) ? $path : str_replace(
+        return !$this->basePath ? $path : str_replace(
             $this->basePath.DIRECTORY_SEPARATOR, '', $path
         );
     }
