@@ -17,14 +17,16 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class FormatProgressFail.
+ * Class FormatExtension.
  */
 class FormatExtension implements ExtensionInterface
 {
+
     /**
      * Available services
      */
     const ROOT_LISTENER_ID = 'output.node.listener.progress_fail';
+
     const RESULT_TO_STRING_CONVERTER_ID = 'output.node.printer.result_to_string';
 
     /**
@@ -38,20 +40,14 @@ class FormatExtension implements ExtensionInterface
     const BASE_PATH = '%paths.base%';
 
     /**
-     * You can modify the container here before it is dumped to PHP code.
-     *
-     * @param ContainerBuilder $container
-     *
-     * @api
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
     }
 
     /**
-     * Returns the extension config key.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getConfigKey()
     {
@@ -59,37 +55,23 @@ class FormatExtension implements ExtensionInterface
     }
 
     /**
-     * Initializes other extensions.
-     *
-     * This method is called immediately after all extensions are activated but
-     * before any extension `configure()` method is called. This allows extensions
-     * to hook into the configuration of other extensions providing such an
-     * extension point.
-     *
-     * @param ExtensionManager $extensionManager
+     * {@inheritdoc}
      */
     public function initialize(ExtensionManager $extensionManager)
     {
     }
 
     /**
-     * Setups configuration for the extension.
-     *
-     * @param ArrayNodeDefinition $builder
+     * {@inheritdoc}
      */
     public function configure(ArrayNodeDefinition $builder)
     {
         $builder->children()->scalarNode('name')->defaultValue(self::MOD_ID);
-        $builder->children()->scalarNode('base_path')->defaultValue(
-            self::BASE_PATH
-        );
+        $builder->children()->scalarNode('base_path')->defaultValue(self::BASE_PATH);
     }
 
     /**
-     * Loads extension services into temporary container.
-     *
-     * @param ContainerBuilder $container
-     * @param array            $config
+     * {@inheritdoc}
      */
     public function load(ContainerBuilder $container, array $config)
     {

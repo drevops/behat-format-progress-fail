@@ -4,7 +4,7 @@ default:
     default:
       paths: [ '%paths.base%/tests/behat/features' ]
       contexts:
-        - BehatCliContext
+        - FeatureContext
 
   extensions:
     IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
