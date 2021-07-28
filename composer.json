@@ -1,5 +1,5 @@
 {
-  "name": "integratedexperts/behat-format-progress-fail",
+  "name": "drevops/behat-format-progress-fail",
   "description": "Behat output formatter to show progress as TAP and fails inline.",
   "type": "library",
   "license": "GPL-2.0-or-later",
@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-0": {
-      "IntegratedExperts\\BehatFormatProgressFail": "src/"
+      "DrevOps\\BehatFormatProgressFail": "src/"
     }
   }
 }

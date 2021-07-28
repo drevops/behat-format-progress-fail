@@ -1,10 +1,10 @@
 # Behat Progress Fail Output Extension
 Behat output formatter to show progress as TAP and fails inline.
 
-[![CircleCI](https://circleci.com/gh/integratedexperts/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/integratedexperts/behat-format-progress-fail)
-[![Latest Stable Version](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/v/stable)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
-[![Total Downloads](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/downloads)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
-[![License](https://poser.pugx.org/integratedexperts/behat-format-progress-fail/license)](https://packagist.org/packages/integratedexperts/behat-format-progress-fail)
+[![CircleCI](https://circleci.com/gh/drevops/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/drevops/behat-format-progress-fail)
+[![Latest Stable Version](https://poser.pugx.org/drevops/behat-format-progress-fail/v/stable)](https://packagist.org/packages/drevops/behat-format-progress-fail)
+[![Total Downloads](https://poser.pugx.org/drevops/behat-format-progress-fail/downloads)](https://packagist.org/packages/drevops/behat-format-progress-fail)
+[![License](https://poser.pugx.org/drevops/behat-format-progress-fail/license)](https://packagist.org/packages/drevops/behat-format-progress-fail)
 
 ## Output
 ```
@@ -26,7 +26,7 @@ Behat output formatter to show progress as TAP and fails inline.
 ## Installing
 
 ```bash
-composer require --dev integratedexperts/behat-format-progress-fail
+composer require --dev drevops/behat-format-progress-fail
 ```
 
 ## Configure
@@ -35,7 +35,7 @@ composer require --dev integratedexperts/behat-format-progress-fail
 ```yaml
 default:
   extensions:
-    IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
+    DrevOps\BehatFormatProgressFail\FormatExtension: ~
 ```
 ## Usage
 

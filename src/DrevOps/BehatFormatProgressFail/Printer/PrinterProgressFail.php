@@ -5,7 +5,7 @@
  * Behat progress printer to support show fails pretty and passed like dots.
  */
 
-namespace IntegratedExperts\BehatFormatProgressFail\Printer;
+namespace DrevOps\BehatFormatProgressFail\Printer;
 
 use Behat\Behat\Output\Node\Printer\Helper\ResultToStringConverter;
 use Behat\Behat\Output\Node\Printer\StepPrinter;

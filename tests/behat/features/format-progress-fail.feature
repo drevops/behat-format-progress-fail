@@ -77,7 +77,7 @@ Feature: behat-format-progress-fail
         formatters:
           progress_fail: ~
         extensions:
-          IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
+          DrevOps\BehatFormatProgressFail\FormatExtension: ~
       """
     And a file named "features/apples.feature" with:
       """

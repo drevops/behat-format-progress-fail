@@ -7,4 +7,4 @@ default:
         - BehatCliContext
 
   extensions:
-    IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
+    DrevOps\BehatFormatProgressFail\FormatExtension: ~

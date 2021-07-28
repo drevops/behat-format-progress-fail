@@ -5,7 +5,7 @@
  * Behat progress format extension.
  */
 
-namespace IntegratedExperts\BehatFormatProgressFail;
+namespace DrevOps\BehatFormatProgressFail;
 
 use Behat\Testwork\Exception\ServiceContainer\ExceptionExtension;
 use Behat\Testwork\Output\ServiceContainer\OutputExtension;
@@ -83,7 +83,7 @@ class FormatExtension implements ExtensionInterface
         $container->setDefinition(self::ROOT_LISTENER_ID, $definition);
 
         $definition = new Definition(
-            'IntegratedExperts\BehatFormatProgressFail\Printer\PrinterProgressFail', [
+            'DrevOps\BehatFormatProgressFail\Printer\PrinterProgressFail', [
                 new Reference(self::RESULT_TO_STRING_CONVERTER_ID),
                 $config['base_path'],
             ]
