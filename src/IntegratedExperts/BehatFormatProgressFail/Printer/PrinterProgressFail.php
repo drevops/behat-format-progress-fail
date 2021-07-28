@@ -9,6 +9,7 @@ namespace IntegratedExperts\BehatFormatProgressFail\Printer;
 
 use Behat\Behat\Output\Node\Printer\Helper\ResultToStringConverter;
 use Behat\Behat\Output\Node\Printer\StepPrinter;
+use Behat\Behat\Tester\Result\ExecutedStepResult;
 use Behat\Behat\Tester\Result\StepResult;
 use Behat\Gherkin\Node\ScenarioLikeInterface as Scenario;
 use Behat\Gherkin\Node\StepNode;
@@ -91,9 +92,15 @@ class PrinterProgressFail implements StepPrinter
      */
     protected function printFailure($result, $scenario, $step)
     {
+        $style = $this->resultConverter->convertResultToString($result);
+
+        // Return default format for any non-executed step results.
+        if (!$result instanceof ExecutedStepResult) {
+            return "{+$style}F{-$style}";
+        }
+
         $output = '';
 
-        $style = $this->resultConverter->convertResultToString($result);
         $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
         $fileLine = $step->getLine();
 
