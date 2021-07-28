@@ -7,4 +7,4 @@ default:
         - FeatureContext
 
   extensions:
-    IntegratedExperts\BehatFormatProgressFail\FormatExtension: ~
+    DrevOps\BehatFormatProgressFail\FormatExtension: ~
