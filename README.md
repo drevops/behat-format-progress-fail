@@ -1,11 +1,25 @@
-# Behat Progress Fail Output Extension
-Behat output formatter to show progress as TAP and fails inline.
+<p align="center">
+  <a href="" rel="noopener">
+  <img width=200px height=200px src="https://placehold.jp/000000/ffffff/200x200.png?text=Behat+Progress+Fail+Output&css=%7B%22border-radius%22%3A%22%20100px%22%7D" alt="Yourproject logo"></a>
+</p>
 
-[![CircleCI](https://circleci.com/gh/drevops/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/drevops/behat-format-progress-fail)
+<h1 align="center">Behat Progress Fail Output Extension</h1>
+
+<div align="center">
+
+[![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/pulls)
+[![Tests](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/drevops/behat-format-progress-fail/graph/badge.svg?token=7WEB1IXBYT)](https://codecov.io/gh/drevops/behat-format-progress-fail)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail)
-[![Total Downloads](https://poser.pugx.org/drevops/behat-format-progress-fail/downloads)](https://packagist.org/packages/drevops/behat-format-progress-fail)
 ![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
+![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
 
+</div>
+
+## Features
+
+- Behat output formatter to show progress as TAP and fails inline.
 
 ## Output
 ```
