@@ -42,7 +42,7 @@ class FormatExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
     }
 
@@ -57,14 +57,14 @@ class FormatExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function initialize(ExtensionManager $extensionManager)
+    public function initialize(ExtensionManager $extensionManager): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function configure(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder): void
     {
         $builder->children()->scalarNode('name')->defaultValue(self::MOD_ID);
         $builder->children()->scalarNode('base_path')->defaultValue(self::BASE_PATH);
@@ -73,7 +73,7 @@ class FormatExtension implements ExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function load(ContainerBuilder $container, array $config)
+    public function load(ContainerBuilder $container, array $config): void
     {
         $definition = new Definition(
             'Behat\Behat\Output\Node\EventListener\AST\StepListener', [
