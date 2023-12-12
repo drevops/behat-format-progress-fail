@@ -61,9 +61,10 @@ default:
 
 ### Local development setup
 
-1. Install Docker.
-2. Start environment: `docker compose up -d --build`.
-3. Install dependencies: `docker compose exec phpserver composer install --ansi --no-suggest`.
+```bash
+docker compose up -d --build # start environment
+docker compose exec phpserver composer install --ansi --no-suggest # install dependencies
+```
 
 ### Lint code
 
