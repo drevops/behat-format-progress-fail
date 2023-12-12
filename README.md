@@ -21,7 +21,6 @@
 
 - Behat output formatter to show progress as TAP and fails inline.
 
-## Output
 ```
 ..
 --- FAIL ---
@@ -38,13 +37,19 @@
 
 ![Output in CI](https://cloud.githubusercontent.com/assets/378794/26039517/1765b812-395f-11e7-9932-dd1aa43a97d4.png)
 
-## Installing
+## Installation
 
 ```bash
 composer require --dev drevops/behat-format-progress-fail
 ```
 
-## Configure
+## Usage
+
+```bash
+vendor/bin/behat --format=progress_fail
+```
+
+### Configure
 
 >behat.yml
 ```yaml
@@ -52,30 +57,26 @@ default:
   extensions:
     DrevOps\BehatFormatProgressFail\FormatExtension: ~
 ```
-## Usage
-
-```bash
-vendor/bin/behat --format=progress_fail
-```
 
 ## Maintenance
 
 ### Local development setup
 
 1. Install Docker.
-2. Start environment: `docker-compose up -d --build`.
-3. Install dependencies: `docker-compose exec phpserver composer install --ansi --no-suggest`.
+2. Start environment: `docker compose up -d --build`.
+3. Install dependencies: `docker compose exec phpserver composer install --ansi --no-suggest`.
 
 ### Lint code
 
 ```bash
-docker-compose exec phpserver vendor/bin/phpcs
+docker compose exec phpserver composer lint
+docker compose exec phpserver composer lint:fix
 ```
 
 ### Run tests
 
 ```bash
-docker-compose exec phpserver vendor/bin/behat
+docker compose exec phpserver vendor/bin/behat
 ```
 
 ### Enable Xdebug
@@ -87,5 +88,5 @@ XDEBUG_ENABLE=true docker-compose up -d phpserver
 To disable, run
 
 ```bash
-docker-compose up -d phpserver
+docker compose stop
 ```
