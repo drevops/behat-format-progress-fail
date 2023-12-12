@@ -1,0 +1,16 @@
+##
+# Configuration file for PHPStan static code checking, see https://phpstan.org .
+#
+
+parameters:
+
+  level: 9
+
+  paths:
+    - src
+    - tests
+
+  excludePaths:
+    - vendor/*
+    - node_modules/*
+    - tests/behat/features/bootstrap

@@ -14,26 +14,26 @@ jobs:
           command: composer validate --ansi --strict
       - run:
           name: Start containers.
-          command: docker-compose up -d --build
+          command: docker compose up -d --build
       - run:
           name: Copy codebase into container.
-          command: docker cp -L /app/. $(docker-compose ps -q phpserver):/app/
+          command: docker cp -L /app/. $(docker compose ps -q phpserver):/app/
       - run:
           name: Install dev dependencies.
-          command: docker-compose exec phpserver composer install --ansi --no-suggest
+          command: docker compose exec phpserver composer install --ansi --no-suggest
       - run:
           name: Lint code.
-          command: docker-compose exec phpserver vendor/bin/phpcs
+          command: docker compose exec phpserver vendor/bin/phpcs
       - run:
           name: Run tests.
           command: |
-            docker-compose exec phpserver mkdir -p /app/screenshots
-            docker-compose exec phpserver vendor/bin/behat
+            docker compose exec phpserver mkdir -p /app/screenshots
+            docker compose exec phpserver vendor/bin/behat
       - run:
           name: Copy artifacts.
           command: |
             mkdir -p  /tmp/artifacts/behat
-            docker cp $(docker-compose ps -q phpserver):/app/screenshots  /tmp/artifacts/behat
+            docker cp $(docker compose ps -q phpserver):/app/screenshots  /tmp/artifacts/behat
           when: always
       - store_artifacts:
           path: /tmp/artifacts

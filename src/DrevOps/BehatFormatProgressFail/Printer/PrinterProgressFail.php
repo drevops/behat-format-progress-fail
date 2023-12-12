@@ -7,6 +7,7 @@
 
 namespace DrevOps\BehatFormatProgressFail\Printer;
 
+use Behat\Behat\Definition\Call\DefinitionCall;
 use Behat\Behat\Output\Node\Printer\Helper\ResultToStringConverter;
 use Behat\Behat\Output\Node\Printer\StepPrinter;
 use Behat\Behat\Tester\Result\ExecutedStepResult;
@@ -25,17 +26,17 @@ class PrinterProgressFail implements StepPrinter
     /**
      * @var ResultToStringConverter $resultConverter
      */
-    private $resultConverter;
+    private ResultToStringConverter $resultConverter;
 
     /**
      * @var int $stepsPrinted
      */
-    private $stepsPrinted = 0;
+    private int $stepsPrinted = 0;
 
     /**
      * @var string $basePath
      */
-    private $basePath;
+    private string $basePath;
 
     /**
      * Initializes printer.
@@ -43,7 +44,7 @@ class PrinterProgressFail implements StepPrinter
      * @param ResultToStringConverter $resultConverter
      * @param string                  $basePath
      */
-    public function __construct(ResultToStringConverter $resultConverter, $basePath = '')
+    public function __construct(ResultToStringConverter $resultConverter, string $basePath = '')
     {
         $this->resultConverter = $resultConverter;
         $this->basePath = $basePath;
@@ -52,7 +53,7 @@ class PrinterProgressFail implements StepPrinter
     /**
      * {@inheritdoc}
      */
-    public function printStep(Formatter $formatter, Scenario $scenario, StepNode $step, StepResult $result)
+    public function printStep(Formatter $formatter, Scenario $scenario, StepNode $step, StepResult $result): void
     {
         $lineWidth = 70;
         $printer = $formatter->getOutputPrinter();
@@ -72,7 +73,7 @@ class PrinterProgressFail implements StepPrinter
                 $printer->write("{+$style}U{-$style}");
                 break;
             case TestResult::FAILED:
-                $printer->write($this->printFailure($result, $scenario, $step));
+                $printer->write($this->printFailure($result, $step));
                 break;
         }
 
@@ -85,12 +86,11 @@ class PrinterProgressFail implements StepPrinter
      * Creates information about fail step.
      *
      * @param StepResult $result
-     * @param Scenario   $scenario
      * @param StepNode   $step
      *
      * @return string
      */
-    protected function printFailure($result, $scenario, $step)
+    protected function printFailure(StepResult $result, StepNode $step): string
     {
         $style = $this->resultConverter->convertResultToString($result);
 
@@ -101,22 +101,42 @@ class PrinterProgressFail implements StepPrinter
 
         $output = '';
 
-        $fileName = $this->relativizePaths($result->getCallResult()->getCall()->getFeature()->getFile());
+        $fileName = '';
+        $callResult = $result->getCallResult();
+        $call = $callResult->getCall();
+        if ($call instanceof DefinitionCall) {
+            $feature = $call->getFeature();
+            $fileName = $this->relativizePaths($feature->getFile() ?? '');
+        }
         $fileLine = $step->getLine();
 
         $output .= PHP_EOL;
         $output .= "{+$style}--- FAIL ---{-$style}";
         $output .= PHP_EOL;
-        $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine, implode(PHP_EOL, array_filter($step->getArguments())));
+
+        $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine);
         $output .= PHP_EOL;
 
-        if (count(array_filter($step->getArguments())) > 0) {
-            $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($step->getArguments())));
+        $stepArguments = $step->getArguments();
+        $stepArguments = array_map(function ($item) {
+            if (method_exists($item, '__toString')) {
+                return $item->__toString();
+            }
+
+            return '';
+        }, $stepArguments);
+        $stepArguments = array_filter($stepArguments);
+        if (count($stepArguments) > 0) {
+            $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($stepArguments)));
             $output .= PHP_EOL;
         }
 
-        $output .= sprintf("      {+$style}%s{-$style}", $result->getException()->getMessage());
-        $output .= PHP_EOL;
+        $exception = $result->getException();
+        if ($exception) {
+            $output .= sprintf("      {+$style}%s{-$style}", $exception->getMessage());
+            $output .= PHP_EOL;
+        }
+
         $output .= "{+$style}------------{-$style}";
         $output .= PHP_EOL;
 
@@ -130,7 +150,7 @@ class PrinterProgressFail implements StepPrinter
      *
      * @return string
      */
-    protected function relativizePaths($path)
+    protected function relativizePaths(string $path): string
     {
         return !$this->basePath ? $path : str_replace(
             $this->basePath.DIRECTORY_SEPARATOR, '', $path

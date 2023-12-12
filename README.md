@@ -1,13 +1,25 @@
-# Behat Progress Fail Output Extension
-Behat output formatter to show progress as TAP and fails inline.
+<p align="center">
+  <a href="" rel="noopener">
+  <img width=200px height=200px src="https://placehold.jp/000000/ffffff/200x200.png?text=Behat+Progress+Fail+Output&css=%7B%22border-radius%22%3A%22%20100px%22%7D" alt="Yourproject logo"></a>
+</p>
 
+<h1 align="center">Behat Progress Fail Output Extension</h1>
+
+<div align="center">
+
+[![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/pulls)
 [![CircleCI](https://circleci.com/gh/drevops/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/drevops/behat-format-progress-fail)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail)
-[![Total Downloads](https://poser.pugx.org/drevops/behat-format-progress-fail/downloads)](https://packagist.org/packages/drevops/behat-format-progress-fail)
 ![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
+![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
 
+</div>
 
-## Output
+## Features
+
+- Behat output formatter to show progress as TAP and fails inline.
+
 ```
 ..
 --- FAIL ---
@@ -24,13 +36,19 @@ Behat output formatter to show progress as TAP and fails inline.
 
 ![Output in CI](https://cloud.githubusercontent.com/assets/378794/26039517/1765b812-395f-11e7-9932-dd1aa43a97d4.png)
 
-## Installing
+## Installation
 
 ```bash
 composer require --dev drevops/behat-format-progress-fail
 ```
 
-## Configure
+## Usage
+
+```bash
+vendor/bin/behat --format=progress_fail
+```
+
+### Configure
 
 >behat.yml
 ```yaml
@@ -38,30 +56,26 @@ default:
   extensions:
     DrevOps\BehatFormatProgressFail\FormatExtension: ~
 ```
-## Usage
-
-```bash
-vendor/bin/behat --format=progress_fail
-```
 
 ## Maintenance
 
 ### Local development setup
 
 1. Install Docker.
-2. Start environment: `docker-compose up -d --build`.
-3. Install dependencies: `docker-compose exec phpserver composer install --ansi --no-suggest`.
+2. Start environment: `docker compose up -d --build`.
+3. Install dependencies: `docker compose exec phpserver composer install --ansi --no-suggest`.
 
 ### Lint code
 
 ```bash
-docker-compose exec phpserver vendor/bin/phpcs
+docker compose exec phpserver composer lint
+docker compose exec phpserver composer lint:fix
 ```
 
 ### Run tests
 
 ```bash
-docker-compose exec phpserver vendor/bin/behat
+docker compose exec phpserver vendor/bin/behat
 ```
 
 ### Enable Xdebug
@@ -73,5 +87,5 @@ XDEBUG_ENABLE=true docker-compose up -d phpserver
 To disable, run
 
 ```bash
-docker-compose up -d phpserver
+docker compose up -d phpserver
 ```

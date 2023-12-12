@@ -1,7 +1,7 @@
 {
   "name": "drevops/behat-format-progress-fail",
-  "description": "Behat output formatter to show progress as TAP and fails inline.",
   "type": "library",
+  "description": "Behat output formatter to show progress as TAP and fails inline.",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -9,6 +9,11 @@
       "email": "alex@drevops.com"
     }
   ],
+  "homepage": "https://github.com/drevops/behat-format-progress-fail",
+  "support": {
+    "issues": "https://github.com/drevops/behat-format-progress-fail/issues",
+    "source": "https://github.com/drevops/behat-format-progress-fail"
+  },
   "require": {
     "behat/behat": "^3.3"
   },
@@ -19,11 +24,32 @@
     "squizlabs/php_codesniffer": "^3",
     "escapestudios/symfony2-coding-standard": "^3",
     "phpunit/phpunit": "^9.5",
-    "symfony/process": "^5.3"
+    "symfony/process": "^5.3",
+    "phpstan/phpstan": "^1.10",
+    "phpmd/phpmd": "^2.14"
   },
   "autoload": {
     "psr-0": {
       "DrevOps\\BehatFormatProgressFail": "src/"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "lint": [
+      "phpcs",
+      "phpmd --exclude vendor,vendor-bin,node_modules . text phpmd.xml",
+      "phpstan"
+    ],
+    "lint:fix": "phpcbf",
+    "test": "vendor/bin/behat",
+    "build": [
+      "@composer bin box require --dev humbug/box",
+      "box validate",
+      "box compile"
+    ]
   }
 }
