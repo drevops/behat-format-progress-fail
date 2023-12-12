@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Run tests.
           command: |
-            docker-compose exec phpserver mkdir -p /app/screenshots
+            docker compose exec phpserver mkdir -p /app/screenshots
             docker-compose exec phpserver vendor/bin/behat
       - run:
           name: Copy artifacts.

@@ -9,10 +9,10 @@
       "email": "alex@drevops.com"
     }
   ],
-  "homepage": "https://github.com/yournamespace/yourproject",
+  "homepage": "https://github.com/drevops/behat-format-progress-fail",
   "support": {
-    "issues": "https://github.com/yournamespace/yourproject/issues",
-    "source": "https://github.com/yournamespace/yourproject"
+    "issues": "https://github.com/drevops/behat-format-progress-fail/issues",
+    "source": "https://github.com/drevops/behat-format-progress-fail"
   },
   "require": {
     "behat/behat": "^3.3"
@@ -45,8 +45,7 @@
       "phpstan"
     ],
     "lint:fix": "phpcbf",
-    "test": "phpunit --no-coverage",
-    "test:coverage": "XDEBUG_MODE=coverage phpunit",
+    "test": "vendor/bin/behat",
     "build": [
       "@composer bin box require --dev humbug/box",
       "box validate",
