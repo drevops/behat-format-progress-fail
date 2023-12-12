@@ -87,5 +87,5 @@ XDEBUG_ENABLE=true docker-compose up -d phpserver
 To disable, run
 
 ```bash
-docker compose stop
+docker compose up -d phpserver
 ```
