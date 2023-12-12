@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /app
     docker:
-      - image: drevops/ci-builder
+      - image: drevops/ci-runner:23.11.0
         environment:
           COMPOSER_ALLOW_SUPERUSER: 1
     steps:
@@ -32,8 +32,8 @@ jobs:
       - run:
           name: Copy artifacts.
           command: |
-            mkdir -p  /tmp/artifacts/behat
-            docker cp $(docker compose ps -q phpserver):/app/screenshots  /tmp/artifacts/behat
+            mkdir -p /tmp/artifacts/behat
+            docker cp $(docker compose ps -q phpserver):/app/screenshots /tmp/artifacts/behat
           when: always
       - store_artifacts:
           path: /tmp/artifacts
