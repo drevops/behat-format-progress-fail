@@ -15,6 +15,7 @@
         "source": "https://github.com/drevops/behat-format-progress-fail"
     },
     "require": {
+        "php": ">=8.1",
         "behat/behat": "^3.3"
     },
     "require-dev": {
