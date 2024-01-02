@@ -9,7 +9,7 @@
 
 [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/pulls)
-[![CircleCI](https://circleci.com/gh/drevops/behat-format-progress-fail.svg?style=shield)](https://circleci.com/gh/drevops/behat-format-progress-fail)
+[![Test](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail)
 ![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
 ![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
@@ -59,34 +59,15 @@ default:
 
 ## Maintenance
 
-### Local development setup
-
-```bash
-docker compose up -d --build # start environment
-docker compose exec phpserver composer install --ansi --no-suggest # install dependencies
-```
-
 ### Lint code
 
 ```bash
-docker compose exec phpserver composer lint
-docker compose exec phpserver composer lint:fix
+composer lint
+composer lint:fix
 ```
 
 ### Run tests
 
 ```bash
-docker compose exec phpserver vendor/bin/behat
-```
-
-### Enable Xdebug
-
-```bash
-XDEBUG_ENABLE=true docker-compose up -d phpserver
-```
-
-To disable, run
-
-```bash
-docker compose up -d phpserver
+composer test
 ```
