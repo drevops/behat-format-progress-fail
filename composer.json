@@ -25,7 +25,7 @@
         "escapestudios/symfony2-coding-standard": "^3",
         "phpmd/phpmd": "^2.14",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.5 || ^10.0",
+        "phpunit/phpunit": "^10.0",
         "squizlabs/php_codesniffer": "^3",
         "symfony/process": "^7.0"
     },
@@ -42,7 +42,7 @@
     "scripts": {
         "lint": [
             "phpcs",
-            "phpmd --exclude vendor,vendor-bin,node_modules . text phpmd.xml",
+            "phpmd --exclude vendor . text phpmd.xml",
             "phpstan"
         ],
         "lint:fix": "phpcbf",
