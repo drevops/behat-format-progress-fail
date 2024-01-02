@@ -16,9 +16,9 @@
 
 </div>
 
-## Features
-
-- Behat output formatter to show progress as TAP and fails inline.
+<p align="center">Behat output formatter to show progress as TAP and fails inline.
+    <br>
+</p>
 
 ```
 ..
