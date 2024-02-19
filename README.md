@@ -1,73 +1,23 @@
-<p align="center">
-  <a href="" rel="noopener">
-  <img width=200px height=200px src="https://placehold.jp/000000/ffffff/200x200.png?text=Behat+Progress+Fail+Output&css=%7B%22border-radius%22%3A%22%20100px%22%7D" alt="Behat Progress Fail Output logo"></a>
-</p>
+# DrevOps
 
-<h1 align="center">Behat Progress Fail Output Extension</h1>
+> DevOps ecosystem for Drupal
 
-<div align="center">
+Drupal project template and tooling to speed-up DevOps when working on Drupal
+sites.
 
-[![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/pulls)
-[![Test](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail)
-![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
-![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
+## Repositories
 
-</div>
+| Project                                                                                   | Description                                                                                                                                   | Issues                                                                                                                                                                                | PRs                                                                                                                                                                                            | Version                                                                                                                    | CI Status                                                                                                                                                                                                                                                                                                                                      |
+|-------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [DrevOps](https://github.com/drevops/drevops)                                             | 💧 + 🐳 + 🏗️ + 🛠️ + 🧪️ Drupal project template                                                                                             | [![GitHub Issues](https://img.shields.io/github/issues/drevops/drevops.svg?label=%20)](https://github.com/drevops/drevops/issues?label=%20)                                           | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/drevops.svg?label=%20)](https://github.com/drevops/drevops/pulls?label=%20)                                           | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/drevops?label=%20)                      | [![CircleCI](https://circleci.com/gh/drevops/drevops.svg?style=shield)](https://circleci.com/gh/drevops/drevops)                                                                                                                                                                                                                               |
+| [MariaDB Docker image with enclosed data](https://github.com/drevops/mariadb-drupal-data) | Docker image to capture database data as a Docker layer.                                                                                      | [![GitHub Issues](https://img.shields.io/github/issues/drevops/mariadb-drupal-data.svg?label=%20)](https://github.com/drevops/mariadb-drupal-data/issues?label=%20)                   | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/mariadb-drupal-data.svg?label=%20)](https://github.com/drevops/mariadb-drupal-data/pulls?label=%20)                   | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/mariadb-drupal-data?label=%20)          | [![CircleCI](https://circleci.com/gh/drevops/mariadb-drupal-data.svg?style=shield)](https://circleci.com/gh/drevops/mariadb-drupal-data)                                                                                                                                                                                                       |
+| [CI runner Docker image](https://github.com/drevops/ci-runner)                            | Docker image for CI runner container with many pre-installed tools.                                                                           | [![GitHub Issues](https://img.shields.io/github/issues/drevops/ci-runner.svg?label=%20)](https://github.com/drevops/ci-runner/issues?label=%20)                                       | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/ci-runner.svg?label=%20)](https://github.com/drevops/ci-runner/pulls?label=%20)                                       | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/ci-runner?label=%20)                    | [![CircleCI](https://circleci.com/gh/drevops/ci-runner.svg?style=shield)](https://circleci.com/gh/drevops/ci-runner)                                                                                                                                                                                                                           |
+| [Docker wait for dependencies](https://github.com/drevops/docker-wait-for-dependencies)   | Docker image for the container that puts itself on hold until the other services declared in the `docker-compose.yml` are accessible via TCP. | [![GitHub Issues](https://img.shields.io/github/issues/drevops/docker-wait-for-dependencies.svg?label=%20)](https://github.com/drevops/docker-wait-for-dependencies/issues?label=%20) | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/docker-wait-for-dependencies.svg?label=%20)](https://github.com/drevops/docker-wait-for-dependencies/pulls?label=%20) | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/docker-wait-for-dependencies?label=%20) | [![Test](https://github.com/drevops/docker-wait-for-dependencies/actions/workflows/test.yml/badge.svg)](https://github.com/drevops/docker-wait-for-dependencies/actions/workflows/test.yml)                                                                                                                                                    |
+| [Behat Steps](https://github.com/drevops/behat-steps)                                     | Collection of Behat step definitions.                                                                                                         | [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-steps.svg?label=%20)](https://github.com/drevops/behat-steps/issues?label=%20)                                   | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-steps.svg?label=%20)](https://github.com/drevops/behat-steps/pulls?label=%20)                                   | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-steps?label=%20)                  | [![CircleCI](https://dl.circleci.com/status-badge/img/gh/drevops/behat-steps/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/drevops/behat-steps/tree/master)                                                                                                                                                  |
+| [Behat Screenshot](https://github.com/drevops/behat-screenshot)                           | Behat extension and a step definition to create HTML and image screenshots on demand or test fail.                                            | [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-screenshot.svg?label=%20)](https://github.com/drevops/behat-screenshot/issues?label=%20)                         | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-screenshot.svg?label=%20)](https://github.com/drevops/behat-screenshot/pulls?label=%20)                         | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-screenshot?label=%20)             | [![CircleCI](https://circleci.com/gh/drevops/behat-screenshot.svg?style=shield)](https://circleci.com/gh/drevops/behat-screenshot)                                                                                                                                                                                                             |
+| [Behat Progress Fail](https://github.com/drevops/behat-format-progress-fail)              | Behat output formatter to show progress as TAP and fails inline.                                                                              | [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg?label=%20)](https://github.com/drevops/behat-format-progress-fail/issues?label=%20)     | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg?label=%20)](https://github.com/drevops/behat-format-progress-fail/pulls?label=%20)     | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail?label=%20)   | [![Test](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml)                                                                                                                                                |
+| [Behat PHP server](https://github.com/drevops/behat-phpserver)                            | Behat Context to enable PHPServer in tests.                                                                                                   | [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-phpserver.svg?label=%20)](https://github.com/drevops/behat-phpserver/issues?label=%20)                           | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-phpserver.svg?label=%20)](https://github.com/drevops/behat-phpserver/pulls?label=%20)                           | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-phpserver?label=%20)              | [![Test](https://github.com/drevops/behat-phpserver/actions/workflows/test-php.yml/badge.svg)](https://github.com/drevops/behat-phpserver/actions/workflows/test-php.yml)                                                                                                                                                                      | 
+| [BATS helpers](https://github.com/drevops/bats-helpers)                                   | Helpers and assertions for BATS testing.                                                                                                      | [![GitHub Issues](https://img.shields.io/github/issues/drevops/bats-helpers.svg?label=%20)](https://github.com/drevops/bats-helpers/issues?label=%20)                                 | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/bats-helpers.svg?label=%20)](https://github.com/drevops/bats-helpers/pulls?label=%20)                                 | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/bats-helpers?label=%20)                 | [![Test](https://github.com/drevops/bats-helpers/actions/workflows/test-shell.yml/badge.svg)](https://github.com/drevops/bats-helpers/actions/workflows/test-shell.yml)                                                                                                                                                                        |
+| [Artifact Builder](https://github.com/drevops/git-artifact)                               | Build code artifact and push it to remote repository.                                                                                         | [![GitHub Issues](https://img.shields.io/github/issues/drevops/git-artifact.svg?label=%20)](https://github.com/drevops/git-artifact/issues?label=%20)                                 | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/git-artifact.svg?label=%20)](https://github.com/drevops/git-artifact/pulls?label=%20)                                 | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/git-artifact?label=%20)                 | [![CircleCI](https://circleci.com/gh/drevops/git-artifact.svg?style=shield)](https://circleci.com/gh/drevops/git-artifact)                                                                                                                                                                                                                     |
+| [Renovate for Drupal](https://github.com/drevops/renovate-drupal)                         | Renovate configuration for automated Drupal dependency updates.                                                                               | [![GitHub Issues](https://img.shields.io/github/issues/drevops/renovate-drupal.svg?label=%20)](https://github.com/drevops/renovate-drupal/issues?label=%20)                           | [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/renovate-drupal.svg?label=%20)](https://github.com/drevops/renovate-drupal/pulls?label=%20)                           | ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/renovate-drupal?label=%20)              | [![CircleCI](https://dl.circleci.com/status-badge/img/gh/drevops/renovate-circleci-drupal-example/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/drevops/renovate-circleci-drupal-example/tree/main)<br/>![GitHub Actions](https://github.com/drevops/renovate-drupal/actions/workflows/renovate.yml/badge.svg) |
 
-<p align="center">Behat output formatter to show progress as TAP and fails inline.
-    <br>
-</p>
-
-```
-..
---- FAIL ---
-  Then I should have 3 apples # (features/apples.feature):11
-    Failed asserting that 2 matches expected 3.
-------------
-......U.......
---- FAIL ---
-  Then I should have 8 apples # (features/apples.feature):25
-    Failed asserting that 7 matches expected 8.
-------------
-.....UU
-```
-
-![Output in CI](https://cloud.githubusercontent.com/assets/378794/26039517/1765b812-395f-11e7-9932-dd1aa43a97d4.png)
-
-## Installation
-
-```bash
-composer require --dev drevops/behat-format-progress-fail
-```
-
-## Usage
-
-```bash
-vendor/bin/behat --format=progress_fail
-```
-
-### Configure
-
->behat.yml
-```yaml
-default:
-  extensions:
-    DrevOps\BehatFormatProgressFail\FormatExtension: ~
-```
-
-## Maintenance
-
-### Lint code
-
-```bash
-composer lint
-composer lint-fix
-```
-
-### Run tests
-
-```bash
-composer test
-```
