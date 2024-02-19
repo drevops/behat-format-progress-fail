@@ -53,6 +53,8 @@ return static function (RectorConfig $rectorConfig): void {
     // Dependencies.
     '*/vendor/*',
     '*/node_modules/*',
+    // BehatCliContext.
+    'tests/behat/features/bootstrap/BehatCliContext.php',
   ]);
 
   $rectorConfig->fileExtensions([
