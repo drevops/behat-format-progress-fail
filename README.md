@@ -9,7 +9,7 @@
 
 [![GitHub Issues](https://img.shields.io/github/issues/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/drevops/behat-format-progress-fail.svg)](https://github.com/drevops/behat-format-progress-fail/pulls)
-[![Test](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test.yml)
+[![Test](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml/badge.svg)](https://github.com/drevops/behat-format-progress-fail/actions/workflows/test-php.yml)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/drevops/behat-format-progress-fail)
 ![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
 ![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
@@ -63,7 +63,7 @@ default:
 
 ```bash
 composer lint
-composer lint:fix
+composer lint-fix
 ```
 
 ### Run tests
