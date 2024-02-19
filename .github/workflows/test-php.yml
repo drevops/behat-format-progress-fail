@@ -39,4 +39,4 @@ jobs:
         run: composer lint
 
       - name: Run tests
-        run: XDEBUG_MODE=coverage composer test
+        run: composer test
