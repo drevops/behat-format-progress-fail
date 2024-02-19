@@ -7,6 +7,16 @@
 
 namespace DrevOps\BehatFormatProgressFail;
 
+use Behat\Behat\Output\Node\EventListener\AST\StepListener;
+use DrevOps\BehatFormatProgressFail\Printer\PrinterProgressFail;
+use Behat\Testwork\Output\NodeEventListeningFormatter;
+use Behat\Testwork\Output\Node\EventListener\ChainEventListener;
+use Behat\Behat\Output\Node\EventListener\Statistics\StatisticsListener;
+use Behat\Behat\Output\Node\EventListener\Statistics\ScenarioStatsListener;
+use Behat\Behat\Output\Node\EventListener\Statistics\StepStatsListener;
+use Behat\Behat\Output\Node\EventListener\Statistics\HookStatsListener;
+use Behat\Testwork\Output\Printer\StreamOutputPrinter;
+use Behat\Behat\Output\Printer\ConsoleOutputFactory;
 use Behat\Testwork\Exception\ServiceContainer\ExceptionExtension;
 use Behat\Testwork\Output\ServiceContainer\OutputExtension;
 use Behat\Testwork\ServiceContainer\Extension as ExtensionInterface;
@@ -76,14 +86,14 @@ class FormatExtension implements ExtensionInterface
     public function load(ContainerBuilder $container, array $config): void
     {
         $definition = new Definition(
-            'Behat\Behat\Output\Node\EventListener\AST\StepListener', [
+            StepListener::class, [
                 new Reference('output.printer.'.$config['name']),
             ]
         );
         $container->setDefinition(self::ROOT_LISTENER_ID, $definition);
 
         $definition = new Definition(
-            'DrevOps\BehatFormatProgressFail\Printer\PrinterProgressFail', [
+            PrinterProgressFail::class, [
                 new Reference(self::RESULT_TO_STRING_CONVERTER_ID),
                 $config['base_path'],
             ]
@@ -93,17 +103,17 @@ class FormatExtension implements ExtensionInterface
         );
 
         $definition = new Definition(
-            'Behat\Testwork\Output\NodeEventListeningFormatter', [
+            NodeEventListeningFormatter::class, [
                 $config['name'],
                 'Prints one character per step and fail view pretty.',
                 ['timer' => true],
                 $this->createOutputPrinterDefinition(),
                 new Definition(
-                    'Behat\Testwork\Output\Node\EventListener\ChainEventListener', [
+                    ChainEventListener::class, [
                         [
                             new Reference(self::ROOT_LISTENER_ID),
                             new Definition(
-                                'Behat\Behat\Output\Node\EventListener\Statistics\StatisticsListener', [
+                                StatisticsListener::class, [
                                     new Reference('output.progress.statistics'),
                                     new Reference(
                                         'output.node.printer.progress.statistics'
@@ -111,12 +121,12 @@ class FormatExtension implements ExtensionInterface
                                 ]
                             ),
                             new Definition(
-                                'Behat\Behat\Output\Node\EventListener\Statistics\ScenarioStatsListener', [
+                                ScenarioStatsListener::class, [
                                     new Reference('output.progress.statistics'),
                                 ]
                             ),
                             new Definition(
-                                'Behat\Behat\Output\Node\EventListener\Statistics\StepStatsListener', [
+                                StepStatsListener::class, [
                                     new Reference('output.progress.statistics'),
                                     new Reference(
                                         ExceptionExtension::PRESENTER_ID
@@ -124,7 +134,7 @@ class FormatExtension implements ExtensionInterface
                                 ]
                             ),
                             new Definition(
-                                'Behat\Behat\Output\Node\EventListener\Statistics\HookStatsListener', [
+                                HookStatsListener::class, [
                                     new Reference('output.progress.statistics'),
                                     new Reference(
                                         ExceptionExtension::PRESENTER_ID
@@ -148,13 +158,14 @@ class FormatExtension implements ExtensionInterface
      * Creates output printer definition.
      *
      * @return Definition
+     *   The output printer definition.
      */
-    protected function createOutputPrinterDefinition()
+    protected function createOutputPrinterDefinition(): Definition
     {
         return new Definition(
-            'Behat\Testwork\Output\Printer\StreamOutputPrinter', [
+            StreamOutputPrinter::class, [
                 new Definition(
-                    'Behat\Behat\Output\Printer\ConsoleOutputFactory'
+                    ConsoleOutputFactory::class
                 ),
             ]
         );

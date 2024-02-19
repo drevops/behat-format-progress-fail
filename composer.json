@@ -26,6 +26,7 @@
         "phpmd/phpmd": "^2.14",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0",
+        "rector/rector": "^1.0.0",
         "squizlabs/php_codesniffer": "^3",
         "symfony/process": "^6 || ^7.0"
     },
@@ -43,9 +44,13 @@
         "lint": [
             "phpcs",
             "phpmd --exclude vendor . text phpmd.xml",
-            "phpstan"
+            "phpstan",
+            "rector --clear-cache --dry-run"
         ],
-        "lint:fix": "phpcbf",
+        "lint-fix": [
+            "rector --clear-cache",
+            "phpcbf"
+        ],
         "test": "vendor/bin/behat"
     }
 }

@@ -23,31 +23,13 @@ use Behat\Testwork\Tester\Result\TestResult;
 class PrinterProgressFail implements StepPrinter
 {
 
-    /**
-     * @var ResultToStringConverter $resultConverter
-     */
-    private ResultToStringConverter $resultConverter;
-
-    /**
-     * @var int $stepsPrinted
-     */
     private int $stepsPrinted = 0;
 
     /**
-     * @var string $basePath
-     */
-    private string $basePath;
-
-    /**
      * Initializes printer.
-     *
-     * @param ResultToStringConverter $resultConverter
-     * @param string                  $basePath
      */
-    public function __construct(ResultToStringConverter $resultConverter, string $basePath = '')
+    public function __construct(private readonly ResultToStringConverter $resultConverter, private readonly string $basePath = '')
     {
-        $this->resultConverter = $resultConverter;
-        $this->basePath = $basePath;
     }
 
     /**
@@ -61,16 +43,16 @@ class PrinterProgressFail implements StepPrinter
 
         switch ($result->getResultCode()) {
             case TestResult::PASSED:
-                $printer->write("{+$style}.{-$style}");
+                $printer->write(sprintf('{+%s}.{-%s}', $style, $style));
                 break;
             case TestResult::SKIPPED:
-                $printer->write("{+$style}-{-$style}");
+                $printer->write(sprintf('{+%s}-{-%s}', $style, $style));
                 break;
             case TestResult::PENDING:
-                $printer->write("{+$style}P{-$style}");
+                $printer->write(sprintf('{+%s}P{-%s}', $style, $style));
                 break;
             case StepResult::UNDEFINED:
-                $printer->write("{+$style}U{-$style}");
+                $printer->write(sprintf('{+%s}U{-%s}', $style, $style));
                 break;
             case TestResult::FAILED:
                 $printer->write($this->printFailure($result, $step));
@@ -85,10 +67,8 @@ class PrinterProgressFail implements StepPrinter
     /**
      * Creates information about fail step.
      *
-     * @param StepResult $result
-     * @param StepNode   $step
-     *
      * @return string
+     *   Information about fail step.
      */
     protected function printFailure(StepResult $result, StepNode $step): string
     {
@@ -96,7 +76,7 @@ class PrinterProgressFail implements StepPrinter
 
         // Return default format for any non-executed step results.
         if (!$result instanceof ExecutedStepResult) {
-            return "{+$style}F{-$style}";
+            return sprintf('{+%s}F{-%s}', $style, $style);
         }
 
         $output = '';
@@ -111,14 +91,14 @@ class PrinterProgressFail implements StepPrinter
         $fileLine = $step->getLine();
 
         $output .= PHP_EOL;
-        $output .= "{+$style}--- FAIL ---{-$style}";
+        $output .= sprintf('{+%s}--- FAIL ---{-%s}', $style, $style);
         $output .= PHP_EOL;
 
-        $output .= sprintf("    {+$style}%s %s{-$style} {+comment}# (%s):%s{-comment}", $step->getKeyword(), $step->getText(), $fileName, $fileLine);
+        $output .= sprintf(sprintf('    {+%s}%%s %%s{-%s} {+comment}# (%%s):%%s{-comment}', $style, $style), $step->getKeyword(), $step->getText(), $fileName, $fileLine);
         $output .= PHP_EOL;
 
         $stepArguments = $step->getArguments();
-        $stepArguments = array_map(function ($item) {
+        $stepArguments = array_map(static function ($item) {
             if (method_exists($item, '__toString')) {
                 return $item->__toString();
             }
@@ -127,32 +107,30 @@ class PrinterProgressFail implements StepPrinter
         }, $stepArguments);
         $stepArguments = array_filter($stepArguments);
         if (count($stepArguments) > 0) {
-            $output .= sprintf("    {+$style}%s{-$style}", implode(PHP_EOL, array_filter($stepArguments)));
+            $output .= sprintf(sprintf('    {+%s}%%s{-%s}', $style, $style), implode(PHP_EOL, array_filter($stepArguments)));
             $output .= PHP_EOL;
         }
 
         $exception = $result->getException();
         if ($exception) {
-            $output .= sprintf("      {+$style}%s{-$style}", $exception->getMessage());
+            $output .= sprintf(sprintf('      {+%s}%%s{-%s}', $style, $style), $exception->getMessage());
             $output .= PHP_EOL;
         }
 
-        $output .= "{+$style}------------{-$style}";
-        $output .= PHP_EOL;
+        $output .= sprintf('{+%s}------------{-%s}', $style, $style);
 
-        return sprintf("%s", $output);
+        return $output.PHP_EOL;
     }
 
     /**
      * Transforms path to relative.
      *
-     * @param string $path
-     *
      * @return string
+     *   Relative path.
      */
     protected function relativizePaths(string $path): string
     {
-        return !$this->basePath ? $path : str_replace(
+        return $this->basePath === '' || $this->basePath === '0' ? $path : str_replace(
             $this->basePath.DIRECTORY_SEPARATOR, '', $path
         );
     }
