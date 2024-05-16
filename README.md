@@ -71,3 +71,7 @@ composer lint-fix
 ```bash
 composer test
 ```
+
+---
+Repository created using https://getscaffold.dev/ project scaffold template
+
