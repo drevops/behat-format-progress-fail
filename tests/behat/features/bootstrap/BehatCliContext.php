@@ -4,12 +4,14 @@
  * @file
  * Context to run tests using Behat through CLI.
  *
- * Straight copy fromBehat project.
+ * Straight copy from Behat project.
  * @see https://raw.githubusercontent.com/Behat/Behat/master/features/bootstrap/FeatureContext.php
  *
- * Changes made to this class:
+ * Changes made to this calss:
  *  - renamed to "BehatCliContext"
  *  - added using a BehatCliTrait.php
+ *  - updated iSetEnvironmentVariable() to support adding of more variables
+ *    instead of replacing.
  *
  * DO NOT MODIFY THIS FILE IN ANY WAY TO KEEP IT SYNCED WITH UPSTREAM!
  */
@@ -24,7 +26,6 @@
  */
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Output\Node\EventListener\JUnit\JUnitDurationListener;
 use Behat\Gherkin\Node\PyStringNode;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Process\PhpExecutableFinder;
@@ -34,6 +35,8 @@ use Symfony\Component\Process\Process;
  * Behat test suite context.
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
+ *
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class BehatCliContext implements Context
 {
@@ -187,13 +190,23 @@ EOL;
     /**
      * Sets specified ENV variable
      *
+     * @When /^the "([^"]*)" environment variable is set to "([^"]*)"$/
+     */
+    public function iSetEnvironmentVariable($name, $value)
+    {
+        $this->env[$name] = (string) $value;
+    }
+
+    /**
+     * Sets the BEHAT_PARAMS env variable
+     *
      * @When /^"BEHAT_PARAMS" environment variable is set to:$/
      *
      * @param PyStringNode $value
      */
-    public function iSetEnvironmentVariable(PyStringNode $value)
+    public function iSetBehatParamsEnvironmentVariable(PyStringNode $value)
     {
-        $this->env = array('BEHAT_PARAMS' => (string) $value);
+        $this->env['BEHAT_PARAMS'] = (string) $value;
     }
 
     /**
@@ -215,13 +228,7 @@ EOL;
             strtr($this->options, array('\'' => '"', '"' => '\"'))
         );
 
-        if (method_exists('\\Symfony\\Component\\Process\\Process', 'fromShellCommandline')) {
-            $this->process = Process::fromShellCommandline($cmd);
-        } else {
-            // BC layer for symfony/process 4.1 and older
-            $this->process = new Process(null);
-            $this->process->setCommandLine($cmd);
-        }
+        $this->process = Process::fromShellCommandline($cmd);
 
         // Prepare the process parameters.
         $this->process->setTimeout(20);
@@ -335,7 +342,10 @@ EOL;
 
         $fileContent = trim(file_get_contents($path));
 
-        $fileContent = preg_replace('/time="(.*)"/', 'time="-IGNORE-VALUE-"', $fileContent);
+        $fileContent = preg_replace('/time="(.*)"/U', 'time="-IGNORE-VALUE-"', $fileContent);
+
+        // The placeholder is necessary because of different separators on Unix and Windows environments
+        $text = str_replace('-DIRECTORY-SEPARATOR-', DIRECTORY_SEPARATOR, $text);
 
         $dom = new DOMDocument();
         $dom->loadXML($text);
@@ -370,25 +380,25 @@ EOL;
         if ('/' !== DIRECTORY_SEPARATOR) {
             $text = preg_replace_callback(
                 '/[ "]features\/[^\n "]+/', function ($matches) {
-                return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-            }, $text
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                }, $text
             );
             $text = preg_replace_callback(
                 '/\<span class\="path"\>features\/[^\<]+/', function ($matches) {
-                return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-            }, $text
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                }, $text
             );
             $text = preg_replace_callback(
                 '/\+[fd] [^ ]+/', function ($matches) {
-                return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-            }, $text
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                }, $text
             );
 
             // error stacktrace
             $text = preg_replace_callback(
                 '/#\d+ [^:]+:/', function ($matches) {
-                return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
-            }, $text
+                    return str_replace('/', DIRECTORY_SEPARATOR, $matches[0]);
+                }, $text
             );
         }
 

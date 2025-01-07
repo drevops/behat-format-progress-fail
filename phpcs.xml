@@ -1,30 +1,32 @@
 <?xml version="1.0"?>
-<ruleset name="behat-format-progress-fail">
-  <description>The coding standard for behat-format-progress-fail.</description>
+<ruleset name="custom">
+    <description>Custom PHPCS standard.</description>
 
-  <rule ref="Symfony" />
+    <!-- Using Drupal coding standard as a base-fix. -->
+    <rule ref="Drupal"/>
+    <!-- Checks that the strict_types has been declared. -->
+    <rule ref="Generic.PHP.RequireStrictTypes" />
 
-  <file>src/</file>
-  <file>tests/</file>
+    <!-- Show sniff codes in all reports -->
+    <arg value="s"/>
+    <!-- Show progress of the run. -->
+    <arg value="p"/>
+    <arg name="colors"/>
 
-  <exclude-pattern>./tests/behat/features/fixtures/*</exclude-pattern>
+    <file>src</file>
+    <file>tests/behat</file>
 
-  <rule ref="PSR2.Methods.FunctionCallSignature.MultipleArguments">
-    <exclude-pattern>.*</exclude-pattern>
-  </rule>
+    <!-- Allow long array lines in tests. -->
+    <rule ref="Drupal.Arrays.Array.LongLineDeclaration">
+        <exclude-pattern>*.Test\.php</exclude-pattern>
+        <exclude-pattern>*.TestCase\.php</exclude-pattern>
+        <exclude-pattern>*.test</exclude-pattern>
+    </rule>
 
-  <!--Exclude namespacing for test features.-->
-  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-    <exclude-pattern>./tests/*</exclude-pattern>
-  </rule>
-  <rule ref="Symfony.NamingConventions.ValidClassName.InvalidInterfaceName">
-      <exclude-pattern>.*context.*</exclude-pattern>
-  </rule>
-  <rule ref="Symfony.Commenting.FunctionComment.MissingParamTag">
-      <exclude-pattern>*</exclude-pattern>
-  </rule>
-  <rule ref="Symfony.Commenting.Annotations.Invalid">
-      <exclude-pattern>.*context.*</exclude-pattern>
-  </rule>
-
+    <!-- Allow missing function names in tests. -->
+    <rule ref="Drupal.Commenting.FunctionComment.Missing">
+        <exclude-pattern>*.Test\.php</exclude-pattern>
+        <exclude-pattern>*.TestCase\.php</exclude-pattern>
+        <exclude-pattern>*.test</exclude-pattern>
+    </rule>
 </ruleset>

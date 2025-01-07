@@ -28,7 +28,8 @@
         "phpunit/phpunit": "^10.0",
         "rector/rector": "^2",
         "squizlabs/php_codesniffer": "^3",
-        "symfony/process": "^6 || ^7.0"
+        "symfony/process": "^6 || ^7.0",
+        "drupal/coder": "^8.3"
     },
     "autoload": {
         "psr-0": {
