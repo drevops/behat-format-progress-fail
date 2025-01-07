@@ -155,26 +155,20 @@ Feature: behat-format-progress-fail
 
       --- FeatureContextTest has missing steps. Define them with these snippets:
 
-          /**
-           * @Then /^do something undefined$/
-           */
-          public function doSomethingUndefined()
+          #[Then('/^do something undefined$/')]
+          public function doSomethingUndefined(): void
           {
               throw new PendingException();
           }
 
-          /**
-           * @Given /^pystring:$/
-           */
-          public function pystring(PyStringNode $string)
+          #[Given('/^pystring:$/')]
+          public function pystring(PyStringNode $string): void
           {
               throw new PendingException();
           }
 
-          /**
-           * @Given /^table:$/
-           */
-          public function table(TableNode $table)
+          #[Given('/^table:$/')]
+          public function table(TableNode $table): void
           {
               throw new PendingException();
           }
