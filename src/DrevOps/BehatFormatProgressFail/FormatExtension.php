@@ -85,9 +85,11 @@ class FormatExtension implements ExtensionInterface
      */
     public function load(ContainerBuilder $container, array $config): void
     {
+        $name = is_string($config['name']) ? $config['name'] : self::MOD_ID;
+
         $definition = new Definition(
             StepListener::class, [
-                new Reference('output.printer.'.$config['name']),
+                new Reference('output.printer.'.$name),
             ]
         );
         $container->setDefinition(self::ROOT_LISTENER_ID, $definition);
@@ -99,7 +101,7 @@ class FormatExtension implements ExtensionInterface
             ]
         );
         $container->setDefinition(
-            'output.printer.'.$config['name'], $definition
+            'output.printer.'.$name, $definition
         );
 
         $definition = new Definition(
@@ -150,7 +152,7 @@ class FormatExtension implements ExtensionInterface
             OutputExtension::FORMATTER_TAG, ['priority' => 100]
         );
         $container->setDefinition(
-            OutputExtension::FORMATTER_TAG.'.'.$config['name'], $definition
+            OutputExtension::FORMATTER_TAG.'.'.$name, $definition
         );
     }
 

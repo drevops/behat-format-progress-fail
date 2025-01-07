@@ -105,9 +105,11 @@ class PrinterProgressFail implements StepPrinter
 
             return '';
         }, $stepArguments);
+
         $stepArguments = array_filter($stepArguments);
+
         if (count($stepArguments) > 0) {
-            $output .= sprintf(sprintf('    {+%s}%%s{-%s}', $style, $style), implode(PHP_EOL, array_filter($stepArguments)));
+            $output .= sprintf(sprintf('    {+%s}%%s{-%s}', $style, $style), implode(PHP_EOL, $stepArguments));
             $output .= PHP_EOL;
         }
 
