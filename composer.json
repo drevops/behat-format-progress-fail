@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=8.1",
-        "behat/behat": "^3.3"
+        "behat/behat": "^3.18"
     },
     "require-dev": {
         "behat/mink": "^1.8",

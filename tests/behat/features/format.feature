@@ -1,5 +1,6 @@
-Feature: behat-format-progress-fail
-  Behat output formatter to show progress as TAP and fails inline.
+Feature: Format
+
+  Assert that the output format work as expected.
 
   Background:
     Given a file named "features/bootstrap/FeatureContextTest.php" with:
@@ -8,8 +9,8 @@ Feature: behat-format-progress-fail
 
       use Behat\Behat\Context\CustomSnippetAcceptingContext,
           Behat\Behat\Tester\Exception\PendingException;
-      use Behat\Gherkin\Node\PyStringNode,
-          Behat\Gherkin\Node\TableNode;
+      use Behat\Gherkinode\PyStringNode,
+          Behat\Gherkinode\TableNode;
       use PHPUnit\Framework\Assert;
 
       class FeatureContextTest implements CustomSnippetAcceptingContext
@@ -52,6 +53,14 @@ Feature: behat-format-progress-fail
           }
 
           /**
+           * @Then /^I should have (\d+) apples verbose$/
+           */
+          public function iShouldHaveApplesVerbose($count) {
+              print "I show you $this->apples apples";
+              Assert::assertEquals(intval($count), $this->apples);
+          }
+
+          /**
            * @Then /^context parameter "([^"]*)" should be equal to "([^"]*)"$/
            */
           public function contextParameterShouldBeEqualTo($key, $val) {
@@ -67,7 +76,9 @@ Feature: behat-format-progress-fail
           }
       }
       """
-    And a file named "behat.yml" with:
+
+  Scenario: Failures during the test formatted correctly
+    Given a file named "behat.yml" with:
       """
       default:
         suites:
@@ -122,9 +133,6 @@ Feature: behat-format-progress-fail
             | col1 | col2 |
             | val1 | val2 |
       """
-
-
-  Scenario: 2 formats, write first to file
     When I run "behat --no-colors --strict -f progress_fail"
     Then it should fail with:
       """
@@ -173,3 +181,154 @@ Feature: behat-format-progress-fail
               throw new PendingException();
           }
       """
+
+  Scenario: Output should be shown only for failed steps
+    Given a file named "behat.yml" with:
+      """
+      default:
+        suites:
+          default:
+            contexts:
+              - FeatureContextTest
+        formatters:
+          progress_fail:
+            show_output: on-fail
+        extensions:
+          DrevOps\BehatFormatProgressFail\FormatExtension: ~
+      """
+    And a file named "features/apples.feature" with:
+      """
+      Feature: Apples story
+        In order to eat apple
+        As a little kid
+        I need to have an apple in my pocket
+
+        Background:
+          Given I have 3 apples
+
+        Scenario: I'm little hungry
+          When I ate 1 apple
+          Then I should have 3 apples verbose
+      """
+    When I run "behat --no-colors --strict -f progress_fail"
+    Then it should fail with:
+      """
+      ..
+      --- FAIL ---
+          Then I should have 3 apples verbose # (features/apples.feature):11
+            Failed asserting that 2 matches expected 3.
+      ------------
+
+      FeatureContextTest::iShouldHaveApplesVerbose():
+        | I show you 2 apples
+
+      --- Failed steps:
+
+      001 Scenario: I'm little hungry           # features/apples.feature:9
+            Then I should have 3 apples verbose # features/apples.feature:11
+              │ I show you 2 apples
+              Failed asserting that 2 matches expected 3.
+
+      1 scenario (1 failed)
+      3 steps (2 passed, 1 failed)
+      """
+
+  Scenario: Output should always be shown
+    Given a file named "behat.yml" with:
+      """
+      default:
+        suites:
+          default:
+            contexts:
+              - FeatureContextTest
+        formatters:
+          progress_fail:
+            show_output: yes
+        extensions:
+          DrevOps\BehatFormatProgressFail\FormatExtension: ~
+      """
+    And a file named "features/apples.feature" with:
+      """
+      Feature: Apples story
+        In order to eat apple
+        As a little kid
+        I need to have an apple in my pocket
+
+        Background:
+          Given I have 3 apples
+
+        Scenario: I'm little hungry
+          When I ate 1 apple
+          Then I should have 2 apples verbose
+          Then I should have 3 apples
+      """
+    When I run "behat --no-colors --strict -f progress_fail"
+    Then it should fail with:
+      """
+      ...
+      FeatureContextTest::iShouldHaveApplesVerbose():
+        | I show you 2 apples
+      --- FAIL ---
+          Then I should have 3 apples # (features/apples.feature):12
+            Failed asserting that 2 matches expected 3.
+      ------------
+
+
+      --- Failed steps:
+
+      001 Scenario: I'm little hungry   # features/apples.feature:9
+            Then I should have 3 apples # features/apples.feature:12
+              Failed asserting that 2 matches expected 3.
+
+      1 scenario (1 failed)
+      4 steps (3 passed, 1 failed)
+      """
+
+  Scenario: Output should not be shown only when not allowed
+    Given a file named "behat.yml" with:
+      """
+      default:
+        suites:
+          default:
+            contexts:
+              - FeatureContextTest
+        formatters:
+          progress_fail:
+            show_output: no
+        extensions:
+          DrevOps\BehatFormatProgressFail\FormatExtension: ~
+      """
+    And a file named "features/apples.feature" with:
+      """
+      Feature: Apples story
+        In order to eat apple
+        As a little kid
+        I need to have an apple in my pocket
+
+        Background:
+          Given I have 3 apples
+
+        Scenario: I'm little hungry
+          When I ate 1 apple
+          Then I should have 3 apples verbose
+      """
+    When I run "behat --no-colors --strict -f progress_fail"
+    Then it should fail with:
+      """
+      ..
+      --- FAIL ---
+          Then I should have 3 apples verbose # (features/apples.feature):11
+            Failed asserting that 2 matches expected 3.
+      ------------
+
+
+      --- Failed steps:
+
+      001 Scenario: I'm little hungry           # features/apples.feature:9
+            Then I should have 3 apples verbose # features/apples.feature:11
+              Failed asserting that 2 matches expected 3.
+
+      1 scenario (1 failed)
+      3 steps (2 passed, 1 failed)
+      """
+
