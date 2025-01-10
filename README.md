@@ -57,6 +57,25 @@ default:
     DrevOps\BehatFormatProgressFail\FormatExtension: ~
 ```
 
+or
+
+>behat.yml
+```yaml
+default:
+  extensions:
+    DrevOps\BehatFormatProgressFail\FormatExtension:
+      show_output: in-summary # Supported values: yes | no | on-fail
+```
+
+#### `show_output`
+
+Show output from within test steps. "Output" is `print`, `echo`, `var_dump`, etc.
+
+- `yes` - always show the output
+- `no` - do not show the output
+- `on-fail` - only show the output if there are test fails
+- `in-summary` - only show in the summary if there are test fails
+
 ## Maintenance
 
 ### Lint code

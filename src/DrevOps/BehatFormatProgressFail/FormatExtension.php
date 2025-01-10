@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DrevOps\BehatFormatProgressFail;
 
 use Behat\Behat\Output\Node\EventListener\AST\StepListener;
+use Behat\Config\Formatter\ShowOutputOption;
 use DrevOps\BehatFormatProgressFail\Printer\PrinterProgressFail;
 use Behat\Testwork\Output\NodeEventListeningFormatter;
 use Behat\Testwork\Output\Node\EventListener\ChainEventListener;
@@ -72,6 +73,7 @@ class FormatExtension implements ExtensionInterface {
   public function configure(ArrayNodeDefinition $builder): void {
     $builder->children()->scalarNode('name')->defaultValue(self::MOD_ID);
     $builder->children()->scalarNode('base_path')->defaultValue(self::BASE_PATH);
+    $builder->children()->scalarNode(ShowOutputOption::OPTION_NAME)->defaultValue(ShowOutputOption::InSummary->value);
   }
 
   /**
@@ -80,73 +82,50 @@ class FormatExtension implements ExtensionInterface {
   public function load(ContainerBuilder $container, array $config): void {
     $name = is_string($config['name']) ? $config['name'] : self::MOD_ID;
 
-    $definition = new Definition(
-          StepListener::class, [
-            new Reference('output.printer.' . $name),
-          ]
-      );
+    $definition = new Definition(StepListener::class, [
+      new Reference('output.printer.' . $name),
+    ]);
     $container->setDefinition(self::ROOT_LISTENER_ID, $definition);
 
-    $definition = new Definition(
-          PrinterProgressFail::class, [
-            new Reference(self::RESULT_TO_STRING_CONVERTER_ID),
-            $config['base_path'],
-          ]
-      );
-    $container->setDefinition(
-          'output.printer.' . $name, $definition
-      );
+    $definition = new Definition(PrinterProgressFail::class, [
+      new Reference(self::RESULT_TO_STRING_CONVERTER_ID),
+      $config['base_path'],
+    ]);
+    $container->setDefinition('output.printer.' . $name, $definition);
 
-    $definition = new Definition(
-          NodeEventListeningFormatter::class, [
-            $config['name'],
-            'Prints one character per step and fail view pretty.',
-              ['timer' => TRUE],
-            $this->createOutputPrinterDefinition(),
-            new Definition(
-                  ChainEventListener::class, [
-                      [
-                        new Reference(self::ROOT_LISTENER_ID),
-                        new Definition(
-                              StatisticsListener::class, [
-                                new Reference('output.progress.statistics'),
-                                new Reference(
-                                      'output.node.printer.progress.statistics'
-                                ),
-                              ]
-                        ),
-                        new Definition(
-                              ScenarioStatsListener::class, [
-                                new Reference('output.progress.statistics'),
-                              ]
-                        ),
-                        new Definition(
-                              StepStatsListener::class, [
-                                new Reference('output.progress.statistics'),
-                                new Reference(
-                                      ExceptionExtension::PRESENTER_ID
-                                ),
-                              ]
-                        ),
-                        new Definition(
-                              HookStatsListener::class, [
-                                new Reference('output.progress.statistics'),
-                                new Reference(
-                                      ExceptionExtension::PRESENTER_ID
-                                ),
-                              ]
-                        ),
-                      ],
-                  ]
-            ),
-          ]
-      );
-    $definition->addTag(
-          OutputExtension::FORMATTER_TAG, ['priority' => 100]
-      );
-    $container->setDefinition(
-          OutputExtension::FORMATTER_TAG . '.' . $name, $definition
-      );
+    $definition = new Definition(NodeEventListeningFormatter::class, [
+      $config['name'],
+      'Prints one character per step and fail view pretty.',
+      [
+        'timer' => TRUE,
+        ShowOutputOption::OPTION_NAME => $config[ShowOutputOption::OPTION_NAME],
+      ],
+      $this->createOutputPrinterDefinition(),
+      new Definition(ChainEventListener::class, [
+        [
+          new Reference(self::ROOT_LISTENER_ID),
+          new Definition(StatisticsListener::class, [
+            new Reference('output.progress.statistics'),
+            new Reference('output.node.printer.progress.statistics'),
+          ]),
+          new Definition(ScenarioStatsListener::class, [
+            new Reference('output.progress.statistics'),
+          ]),
+          new Definition(StepStatsListener::class, [
+            new Reference('output.progress.statistics'),
+            new Reference(ExceptionExtension::PRESENTER_ID),
+          ]),
+          new Definition(HookStatsListener::class, [
+            new Reference('output.progress.statistics'),
+            new Reference(ExceptionExtension::PRESENTER_ID),
+          ]),
+        ],
+      ]),
+    ]);
+
+    $definition->addTag(OutputExtension::FORMATTER_TAG, ['priority' => 100]);
+
+    $container->setDefinition(OutputExtension::FORMATTER_TAG . '.' . $name, $definition);
   }
 
   /**
@@ -156,13 +135,9 @@ class FormatExtension implements ExtensionInterface {
    *   The output printer definition.
    */
   protected function createOutputPrinterDefinition(): Definition {
-    return new Definition(
-          StreamOutputPrinter::class, [
-            new Definition(
-                  ConsoleOutputFactory::class
-            ),
-          ]
-      );
+    return new Definition(StreamOutputPrinter::class, [
+      new Definition(ConsoleOutputFactory::class),
+    ]);
   }
 
 }
