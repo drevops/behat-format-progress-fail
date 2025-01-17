@@ -21,7 +21,7 @@
     "require-dev": {
         "behat/mink": "^1.8",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-        "drevops/behat-phpserver": "^1",
+        "drevops/behat-phpserver": "^2",
         "ergebnis/composer-normalize": "^2.45",
         "escapestudios/symfony2-coding-standard": "^3",
         "phpstan/phpstan": "^2",
