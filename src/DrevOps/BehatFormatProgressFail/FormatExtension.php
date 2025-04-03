@@ -80,7 +80,7 @@ class FormatExtension implements ExtensionInterface {
    * {@inheritdoc}
    */
   public function load(ContainerBuilder $container, array $config): void {
-    $name = is_string($config['name']) ? $config['name'] : self::MOD_ID;
+    $name = isset($config['name']) && is_string($config['name']) ? $config['name'] : self::MOD_ID;
 
     $definition = new Definition(StepListener::class, [
       new Reference('output.printer.' . $name),

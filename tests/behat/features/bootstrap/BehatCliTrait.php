@@ -51,10 +51,10 @@ trait BehatCliTrait {
   /**
    * Helper to check if debug mode is enabled.
    *
-   * @return bool
-   *   TRUE to see debug messages for this trait.
+   * @return string|bool
+   *   The BEHAT_CLI_DEBUG environment variable or FALSE if not set.
    */
-  protected static function behatCliIsDebug(): string|false {
+  protected static function behatCliIsDebug(): string|bool {
     return getenv('BEHAT_CLI_DEBUG');
   }
 
