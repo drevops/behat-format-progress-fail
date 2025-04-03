@@ -7,13 +7,15 @@
  * Straight copy from Behat project.
  * @see https://raw.githubusercontent.com/Behat/Behat/master/features/bootstrap/FeatureContext.php
  *
- * Changes made to this calss:
+ * Changes made to this class:
  *  - renamed to "BehatCliContext"
  *  - added using a BehatCliTrait.php
  *  - updated iSetEnvironmentVariable() to support adding of more variables
  *    instead of replacing.
  *
  * DO NOT MODIFY THIS FILE IN ANY WAY TO KEEP IT SYNCED WITH UPSTREAM!
+ * 
+ * @SuppressWarnings(PHPMD)
  */
 // phpcs:ignoreFile
 

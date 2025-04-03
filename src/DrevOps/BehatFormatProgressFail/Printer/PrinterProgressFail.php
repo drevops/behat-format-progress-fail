@@ -40,27 +40,14 @@ class PrinterProgressFail implements StepPrinter {
     $printer = $formatter->getOutputPrinter();
     $style = $this->resultConverter->convertResultToString($result);
 
-    switch ($result->getResultCode()) {
-      case TestResult::PASSED:
-        $printer->write(sprintf('{+%s}.{-%s}', $style, $style));
-        break;
-
-      case TestResult::SKIPPED:
-        $printer->write(sprintf('{+%s}-{-%s}', $style, $style));
-        break;
-
-      case TestResult::PENDING:
-        $printer->write(sprintf('{+%s}P{-%s}', $style, $style));
-        break;
-
-      case StepResult::UNDEFINED:
-        $printer->write(sprintf('{+%s}U{-%s}', $style, $style));
-        break;
-
-      case TestResult::FAILED:
-        $printer->write($this->printFailure($result, $step));
-        break;
-    }
+    match ($result->getResultCode()) {
+      TestResult::PASSED => $printer->write(sprintf('{+%s}.{-%s}', $style, $style)),
+        TestResult::SKIPPED => $printer->write(sprintf('{+%s}-{-%s}', $style, $style)),
+        TestResult::PENDING => $printer->write(sprintf('{+%s}P{-%s}', $style, $style)),
+        StepResult::UNDEFINED => $printer->write(sprintf('{+%s}U{-%s}', $style, $style)),
+        TestResult::FAILED => $printer->write($this->printFailure($result, $step)),
+        default => $printer->write(sprintf('{+%s}?{-%s}', $style, $style)),
+    };
 
     $show_output = $formatter->getParameter(ShowOutputOption::OPTION_NAME);
     if ($show_output === ShowOutputOption::Yes ||
@@ -136,7 +123,12 @@ class PrinterProgressFail implements StepPrinter {
    * Prints step output (if has one).
    */
   protected function printStdOut(OutputPrinter $printer, StepResult $result): void {
-    if (!$result instanceof ExecutedStepResult || NULL === $result->getCallResult()->getStdOut()) {
+    if (!$result instanceof ExecutedStepResult) {
+      return;
+    }
+
+    $call_result = $result->getCallResult();
+    if (NULL === $call_result->getStdOut()) {
       return;
     }
 
@@ -146,7 +138,6 @@ class PrinterProgressFail implements StepPrinter {
     }
 
     $printer->writeln("\n" . $step_definition->getPath() . ':');
-    $call_result = $result->getCallResult();
     $pad = function ($line): string {
       return sprintf('  | {+stdout}%s{-stdout}', $line);
     };
