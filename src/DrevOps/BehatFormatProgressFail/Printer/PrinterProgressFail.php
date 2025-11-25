@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DrevOps\BehatFormatProgressFail\Printer;
 
+use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Behat\Definition\Call\DefinitionCall;
 use Behat\Behat\Output\Node\Printer\Helper\ResultToStringConverter;
 use Behat\Behat\Output\Node\Printer\StepPrinter;
@@ -83,17 +84,17 @@ class PrinterProgressFail implements StepPrinter {
       $feature = $call->getFeature();
       $file_name = $this->relativizePaths($feature->getFile() ?? '');
     }
-    $fileLine = $step->getLine();
+    $file_line = $step->getLine();
 
     $output .= PHP_EOL;
     $output .= sprintf('{+%s}--- FAIL ---{-%s}', $style, $style);
     $output .= PHP_EOL;
 
-    $output .= sprintf(sprintf('    {+%s}%%s %%s{-%s} {+comment}# (%%s):%%s{-comment}', $style, $style), $step->getKeyword(), $step->getText(), $file_name, $fileLine);
+    $output .= sprintf(sprintf('    {+%s}%%s %%s{-%s} {+comment}# (%%s):%%s{-comment}', $style, $style), $step->getKeyword(), $step->getText(), $file_name, $file_line);
     $output .= PHP_EOL;
 
     $step_arguments = $step->getArguments();
-    $step_arguments = array_map(static function ($item) {
+    $step_arguments = array_map(static function (ArgumentInterface $item) {
       if (method_exists($item, '__toString')) {
         return $item->__toString();
       }
@@ -138,7 +139,7 @@ class PrinterProgressFail implements StepPrinter {
     }
 
     $printer->writeln("\n" . $step_definition->getPath() . ':');
-    $pad = function ($line): string {
+    $pad = function (string $line): string {
       return sprintf('  | {+stdout}%s{-stdout}', $line);
     };
 
