@@ -332,3 +332,59 @@ Feature: Format
       3 steps (2 passed, 1 failed)
       """
 
+  Scenario: Metrics should not double when used with multiple formatters
+    Given a file named "behat.yml" with:
+      """
+      default:
+        suites:
+          default:
+            contexts:
+              - FeatureContextTest
+        extensions:
+          DrevOps\BehatFormatProgressFail\FormatExtension: ~
+      """
+    And a file named "features/apples.feature" with:
+      """
+      Feature: Apples story
+        In order to eat apple
+        As a little kid
+        I need to have an apple in my pocket
+
+        Background:
+          Given I have 3 apples
+
+        Scenario: I'm little hungry
+          When I ate 1 apple
+          Then I should have 2 apples
+          And I should have 2 apples
+
+        Scenario: I eat wrong amount
+          When I ate 1 apple
+          Then I should have 3 apples
+          And I should have 2 apples
+
+        Scenario: I found apples
+          When I found 2 apples
+          Then I should have 5 apples
+          And I should have 5 apples
+      """
+    When I run "behat --no-colors --strict -f progress -o progress.txt -f progress_fail -o std"
+    Then it should fail with:
+      """
+      ......
+      --- FAIL ---
+          Then I should have 3 apples # (features/apples.feature):16
+            Failed asserting that 2 matches expected 3.
+      ------------
+      -....
+
+      --- Failed steps:
+
+      001 Scenario: I eat wrong amount  # features/apples.feature:14
+            Then I should have 3 apples # features/apples.feature:16
+              Failed asserting that 2 matches expected 3.
+
+      3 scenarios (2 passed, 1 failed)
+      12 steps (10 passed, 1 failed, 1 skipped)
+      """
+
