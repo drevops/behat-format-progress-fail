@@ -13,6 +13,7 @@ use Behat\Behat\Output\Node\EventListener\Statistics\StatisticsListener;
 use Behat\Behat\Output\Node\EventListener\Statistics\ScenarioStatsListener;
 use Behat\Behat\Output\Node\EventListener\Statistics\StepStatsListener;
 use Behat\Behat\Output\Node\EventListener\Statistics\HookStatsListener;
+use Behat\Behat\Output\Statistics\TotalStatistics;
 use Behat\Testwork\Output\Printer\StreamOutputPrinter;
 use Behat\Behat\Output\Printer\ConsoleOutputFactory;
 use Behat\Testwork\Exception\ServiceContainer\ExceptionExtension;
@@ -82,6 +83,10 @@ class FormatExtension implements ExtensionInterface {
   public function load(ContainerBuilder $container, array $config): void {
     $name = isset($config['name']) && is_string($config['name']) ? $config['name'] : self::MOD_ID;
 
+    // Create our own statistics object instead of using the shared one.
+    $definition = new Definition(TotalStatistics::class);
+    $container->setDefinition('output.progress_fail.statistics', $definition);
+
     $definition = new Definition(StepListener::class, [
       new Reference('output.printer.' . $name),
     ]);
@@ -105,18 +110,18 @@ class FormatExtension implements ExtensionInterface {
         [
           new Reference(self::ROOT_LISTENER_ID),
           new Definition(StatisticsListener::class, [
-            new Reference('output.progress.statistics'),
+            new Reference('output.progress_fail.statistics'),
             new Reference('output.node.printer.progress.statistics'),
           ]),
           new Definition(ScenarioStatsListener::class, [
-            new Reference('output.progress.statistics'),
+            new Reference('output.progress_fail.statistics'),
           ]),
           new Definition(StepStatsListener::class, [
-            new Reference('output.progress.statistics'),
+            new Reference('output.progress_fail.statistics'),
             new Reference(ExceptionExtension::PRESENTER_ID),
           ]),
           new Definition(HookStatsListener::class, [
-            new Reference('output.progress.statistics'),
+            new Reference('output.progress_fail.statistics'),
             new Reference(ExceptionExtension::PRESENTER_ID),
           ]),
         ],
