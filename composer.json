@@ -29,7 +29,8 @@
         "rector/rector": "^2",
         "squizlabs/php_codesniffer": "^3",
         "symfony/process": "^6 || ^7.0",
-        "drupal/coder": "^8.3"
+        "drupal/coder": "^8.3",
+        "drevops/phpcs-standard": "^0.6"
     },
     "autoload": {
         "psr-0": {
@@ -46,10 +47,10 @@
         "lint": [
             "phpcs",
             "phpstan",
-            "rector --clear-cache --dry-run"
+            "rector --dry-run"
         ],
         "lint-fix": [
-            "rector --clear-cache",
+            "rector",
             "phpcbf"
         ],
         "reset": "rm -Rf vendor vendor-bin composer.lock",
