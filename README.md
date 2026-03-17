@@ -14,7 +14,7 @@
 ![LICENSE](https://img.shields.io/github/license/drevops/behat-format-progress-fail)
 ![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovatebot)
 
-[![Vortex Ecosystem](https://img.shields.io/badge/%F0%9F%8C%80-Vortex%20Ecosystem-65ACBC)](https://github.com/drevops/vortex)
+[![Vortex Ecosystem](https://img.shields.io/badge/%F0%9F%8C%80-Vortex%20Ecosystem-2C5A68?style=for-the-badge&labelColor=65ACBC)](https://github.com/drevops/vortex)
 </div>
 
 <p align="center">Behat output formatter to show progress as TAP and failures inline.
