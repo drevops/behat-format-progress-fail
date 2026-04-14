@@ -110,7 +110,7 @@ class PrinterProgressFail implements StepPrinter {
     }
 
     $exception = $result->getException();
-    if ($exception) {
+    if ($exception instanceof \Exception) {
       $output .= sprintf(sprintf('      {+%s}%%s{-%s}', $style, $style), $exception->getMessage());
       $output .= PHP_EOL;
     }
