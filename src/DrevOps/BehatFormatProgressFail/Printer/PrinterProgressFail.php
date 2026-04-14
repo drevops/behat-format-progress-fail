@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DrevOps\BehatFormatProgressFail\Printer;
 
+use Behat\Behat\Definition\Definition;
 use Behat\Gherkin\Node\ArgumentInterface;
 use Behat\Behat\Definition\Call\DefinitionCall;
 use Behat\Behat\Output\Node\Printer\Helper\ResultToStringConverter;
@@ -110,7 +111,7 @@ class PrinterProgressFail implements StepPrinter {
     }
 
     $exception = $result->getException();
-    if ($exception) {
+    if ($exception instanceof \Exception) {
       $output .= sprintf(sprintf('      {+%s}%%s{-%s}', $style, $style), $exception->getMessage());
       $output .= PHP_EOL;
     }
@@ -134,7 +135,7 @@ class PrinterProgressFail implements StepPrinter {
     }
 
     $step_definition = $result->getStepDefinition();
-    if (!$step_definition) {
+    if (!$step_definition instanceof Definition) {
       return;
     }
 
