@@ -4,10 +4,12 @@
 /.gitattributes  export-ignore
 /.github         export-ignore
 /.gitignore      export-ignore
-/tests           export-ignore
+/CLAUDE.md       export-ignore
+/behat.yml       export-ignore
 /phpcs.xml       export-ignore
 /phpmd.xml       export-ignore
 /phpstan.neon    export-ignore
 /phpunit.xml     export-ignore
+/rector.php      export-ignore
 /renovate.json   export-ignore
-/behat.yml       export-ignore
+/tests           export-ignore
