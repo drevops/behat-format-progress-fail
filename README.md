@@ -17,6 +17,11 @@
 [![Vortex Ecosystem](https://img.shields.io/badge/%F0%9F%8C%80-Vortex%20Ecosystem-2C5A68?style=for-the-badge&labelColor=65ACBC)](https://github.com/drevops/vortex)
 </div>
 
+> [!WARNING]
+> **This package is deprecated.** It is supported until **31 December 2026**, after which it will be marked as abandoned and will receive no further releases, fixes, or compatibility updates.
+>
+> Behat now does this natively. The built-in `progress` formatter gained an `inline_failures` option that prints each failed, pending or undefined step as it happens, instead of holding everything back until the end-of-run summary. That is [exactly what this extension was built for](https://github.com/Behat/Behat/issues/1860), so it has served its purpose. Upgrade to the latest Behat and use the core formatter instead - see [Migrating to Behat core](#migrating-to-behat-core).
+
 <p align="center">Behat output formatter to show progress as TAP and failures inline.
     <br>
 </p>
@@ -76,6 +81,35 @@ Show output from within test steps. "Output" is `print`, `echo`, `var_dump`, etc
 - `no` - do not show the output
 - `on-fail` - only show the output if there are test fails
 - `in-summary` - only show in the summary if there are test fails
+
+## Migrating to Behat core
+
+Upgrade Behat, remove this extension from your `behat.yml`, and enable the option on the built-in `progress` formatter instead:
+
+>behat.yml
+```yaml
+default:
+  formatters:
+    progress:
+      inline_failures: true
+      show_output: in-summary
+```
+
+Or pass it on the command line:
+
+```bash
+vendor/bin/behat --format=progress --format-settings='{"inline_failures": true}'
+```
+
+`show_output` keeps the same four values in core that it has here (`yes`, `no`, `on-fail`, `in-summary`), so that part of your configuration carries over unchanged.
+
+Then drop the dependency:
+
+```bash
+composer remove --dev drevops/behat-format-progress-fail
+```
+
+One caveat on timing: `inline_failures` is merged into Behat's `3.x` branch, but it has not been tagged in a stable release yet (the newest is `v3.32.0`). It will land in the next 3.x release. Until then, stay on this extension - that is what the support window through December 2026 is for.
 
 ## Maintenance
 
