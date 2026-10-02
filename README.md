@@ -99,6 +99,8 @@ composer require --dev behat/behat:^3.33 --with-all-dependencies
 
 Order matters here. Releases after 1.5.1 declare a Composer conflict with Behat 3.33.0 and newer, but older releases don't. If your version constraint allows one of those older releases, Composer quietly falls back to it instead of reporting an error. Upgrade Behat first and you can end up on the new Behat with an old copy of this package still installed.
 
+Behat 3.33.0 and newer need PHP 8.2 or later, so a project still on PHP 8.1 has to upgrade PHP before the second command will resolve.
+
 Until you finish step 2, your Behat config still references the extension, so Behat stops with "extension file or class could not be located".
 
 Going straight to Behat 4? Use `^4.0` instead, and read Behat's [upgrading to 4.0](https://docs.behat.org/en/v4.x/releases/upgrading-to-4.0.html) guide first: 4.x drops YAML config and annotation-based step definitions.
