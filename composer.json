@@ -32,6 +32,9 @@
         "drupal/coder": "^8.3.31",
         "drevops/phpcs-standard": "^0.7"
     },
+    "conflict": {
+        "behat/behat": ">=3.33"
+    },
     "autoload": {
         "psr-0": {
             "DrevOps\\BehatFormatProgressFail": "src/"
